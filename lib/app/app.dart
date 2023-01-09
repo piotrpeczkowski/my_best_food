@@ -1,9 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:my_best_food/features/auth/login_page/login_page.dart';
 
-class PermissionPage extends StatelessWidget {
-  const PermissionPage({
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: RootPage(),
+    );
+  }
+}
+
+class RootPage extends StatelessWidget {
+  const RootPage({
     Key? key,
   }) : super(key: key);
 
