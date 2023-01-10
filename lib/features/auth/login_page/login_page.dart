@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var isCreatingAccount = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +25,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text('Zaloguj się'),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child:
+                    Text(isCreatingAccount ? 'Zarejestruj się' : 'Zaloguj się'),
               ),
               // EMAIL TextField
               Padding(
@@ -52,25 +55,63 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(
                   vertical: 20,
                 ),
-                child: TextButton(
-                  onPressed: () async {
-                    try {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: widget.emailController.text,
-                        password: widget.passwordController.text,
-                      );
-                    } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 4),
-                          backgroundColor: Colors.red,
-                          content: Text('$error'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Zaloguj'),
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (isCreatingAccount == false) {
+                        try {
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                            email: widget.emailController.text,
+                            password: widget.passwordController.text,
+                          );
+                        } catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 4),
+                              backgroundColor: Colors.red,
+                              content: Text('$error'),
+                            ),
+                          );
+                        }
+                      }
+                      if (isCreatingAccount == true) {
+                        try {
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: widget.emailController.text,
+                            password: widget.passwordController.text,
+                          );
+                        } catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 4),
+                              backgroundColor: Colors.red,
+                              content: Text('$error'),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(isCreatingAccount ? 'Zarejestruj' : 'Zaloguj'),
+                  ),
                 ),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (isCreatingAccount == false) {
+                    setState(() {
+                      isCreatingAccount = true;
+                    });
+                  } else {
+                    setState(() {
+                      isCreatingAccount = false;
+                    });
+                  }
+                },
+                child:
+                    Text(isCreatingAccount ? 'Zaloguj się' : 'Zarejestruj się'),
               ),
             ],
           ),
