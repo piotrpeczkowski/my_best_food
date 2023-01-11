@@ -10,6 +10,7 @@ class LoginPage extends StatefulWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -58,6 +59,25 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: const InputDecoration(hintText: 'Hasło'),
                       ),
                     ),
+                    // CONFIRM PASSWORD TextField
+                    Column(
+                      children: [
+                        if (isCreatingAccount == true) ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
+                            child: TextField(
+                              controller: widget.confirmPasswordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                  hintText: 'Potwierdź Hasło'),
+                            ),
+                          ),
+                        ]
+                      ],
+                    ),
+                    // REGISTER and LOGIN ElevatedButton
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20,
@@ -66,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 200,
                         child: ElevatedButton(
                           onPressed: () {
+                            // LOGIN statement
                             if (isCreatingAccount == false) {
                               try {
                                 context.read<LoginCubit>().signIn(
@@ -82,18 +103,31 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             }
+                            // REGISTER statement
                             if (isCreatingAccount == true) {
-                              try {
-                                context.read<LoginCubit>().register(
-                                      email: widget.emailController.text,
-                                      password: widget.passwordController.text,
-                                    );
-                              } catch (error) {
+                              if (widget.passwordController.text ==
+                                  widget.confirmPasswordController.text) {
+                                try {
+                                  context.read<LoginCubit>().register(
+                                        email: widget.emailController.text,
+                                        password:
+                                            widget.passwordController.text,
+                                      );
+                                } catch (error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 4),
+                                      backgroundColor: Colors.red,
+                                      content: Text('$error'),
+                                    ),
+                                  );
+                                }
+                              } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    duration: const Duration(seconds: 4),
+                                  const SnackBar(
+                                    duration: Duration(seconds: 4),
                                     backgroundColor: Colors.red,
-                                    content: Text('$error'),
+                                    content: Text('Password not match'),
                                   ),
                                 );
                               }
@@ -104,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    // LOGIN - REGISTER switch
                     TextButton(
                       onPressed: () {
                         if (isCreatingAccount == false) {
