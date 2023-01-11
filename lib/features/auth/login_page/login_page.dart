@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
+import 'package:my_best_food/repositories/auth_repository.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => LoginCubit(AuthRepository()),
       child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
           return Scaffold(
@@ -89,10 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                               } catch (error) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(seconds: 4),
+                                  SnackBar(
+                                    duration: const Duration(seconds: 4),
                                     backgroundColor: Colors.red,
-                                    content: Text(''),
+                                    content: Text('$error'),
                                   ),
                                 );
                               }
