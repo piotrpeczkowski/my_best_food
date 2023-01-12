@@ -138,26 +138,51 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    // LOGIN - REGISTER switch
-                    TextButton(
-                      onPressed: () {
-                        if (isCreatingAccount == false) {
-                          setState(() {
-                            isCreatingAccount = true;
-                            widget.emailController.text = '';
-                            widget.passwordController.text = '';
-                          });
-                        } else {
-                          setState(() {
-                            isCreatingAccount = false;
-                            widget.emailController.text = '';
-                            widget.passwordController.text = '';
-                          });
-                        }
-                      },
-                      child: Text(isCreatingAccount
-                          ? 'Zaloguj się'
-                          : 'Zarejestruj się'),
+                    Column(
+                      children: [
+                        // RESET PASSWORD button
+                        if (isCreatingAccount == false) ...[
+                          TextButton(
+                            onPressed: () {
+                              try {
+                                context.read<LoginCubit>().resetPassword(
+                                      email: widget.emailController.text.trim(),
+                                    );
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 4),
+                                    backgroundColor: Colors.red,
+                                    content: Text('$error'),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text('Nie pamiętasz hasła?'),
+                          ),
+                        ],
+                        // LOGIN - REGISTER switch
+                        TextButton(
+                          onPressed: () {
+                            if (isCreatingAccount == false) {
+                              setState(() {
+                                isCreatingAccount = true;
+                                widget.emailController.text = '';
+                                widget.passwordController.text = '';
+                              });
+                            } else {
+                              setState(() {
+                                isCreatingAccount = false;
+                                widget.emailController.text = '';
+                                widget.passwordController.text = '';
+                              });
+                            }
+                          },
+                          child: Text(isCreatingAccount
+                              ? 'Zaloguj się'
+                              : 'Zarejestruj się'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
