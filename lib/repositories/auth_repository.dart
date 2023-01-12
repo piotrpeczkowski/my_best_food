@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class AuthRepository {
   Future<void> register(
@@ -28,5 +27,9 @@ class AuthRepository {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email).onError(
           (error, stackTrace) => null,
         );
+  }
+
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

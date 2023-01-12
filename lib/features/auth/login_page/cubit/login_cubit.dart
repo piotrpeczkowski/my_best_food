@@ -23,4 +23,8 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> resetPassword({required String email}) async {
     await _authRepository.resetPassword(email);
   }
+
+  Future<void> signOut() async {
+    await _authRepository.signOut();
+  }
 }
