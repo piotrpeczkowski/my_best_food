@@ -10,10 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'myBestFood',
+      title: Strings.title,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       home: const RootPage(),
     );
   }
@@ -34,9 +35,13 @@ class RootPage extends StatelessWidget {
           if (user == null) {
             return LoginPage();
           }
-          return const HomePage();
+          return HomePage(title: Strings.title);
         },
       ),
     );
   }
+}
+
+class Strings {
+  static String title = 'myBestFood';
 }

@@ -18,7 +18,10 @@ class AccountPageContent extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Jesteś zalogowany jako'),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: Text('Jesteś zalogowany jako'),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     context.read<LoginCubit>().signOut();

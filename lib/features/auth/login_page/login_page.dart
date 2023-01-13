@@ -45,7 +45,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextField(
                         controller: widget.emailController,
-                        decoration: const InputDecoration(hintText: 'E-mail'),
+                        decoration: InputDecoration(
+                          hintText: 'E-mail',
+                          prefixIcon: Icon(
+                            isCreatingAccount ? Icons.person_add : Icons.person,
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
                       ),
                     ),
                     // PASSWORD TextField
@@ -56,7 +69,18 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextField(
                         controller: widget.passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(hintText: 'Hasło'),
+                        decoration: InputDecoration(
+                          hintText: 'Hasło',
+                          prefixIcon: const Icon(Icons.key),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
                       ),
                     ),
                     // CONFIRM PASSWORD TextField
@@ -70,8 +94,18 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextField(
                               controller: widget.confirmPasswordController,
                               obscureText: true,
-                              decoration: const InputDecoration(
-                                  hintText: 'Potwierdź Hasło'),
+                              decoration: InputDecoration(
+                                hintText: 'Potwierdź Hasło',
+                                prefixIcon: const Icon(Icons.key),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
                             ),
                           ),
                         ]
