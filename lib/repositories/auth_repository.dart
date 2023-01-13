@@ -24,9 +24,7 @@ class AuthRepository {
   Future<void> resetPassword(
     String email,
   ) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email).onError(
-          (error, stackTrace) => null,
-        );
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
   Future<void> signOut() async {
