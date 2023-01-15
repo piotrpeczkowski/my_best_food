@@ -44,7 +44,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Builder(builder: (context) {
         if (_currentIndex == 0) {
           return FloatingActionButton(
-              onPressed: () {}, child: const Icon(Icons.add));
+            onPressed: () {},
+            child: const Icon(Icons.add),
+          );
         }
         return BlocProvider(
           create: (context) => LoginCubit(AuthRepository()),
