@@ -22,16 +22,16 @@ class AccountPageContent extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     children: [
-                      const Text('Jesteś zalogowany jako'),
-                      Text('${state.user?.email}'),
+                      const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text('Jesteś zalogowany jako:'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text('${state.user?.email}'),
+                      ),
                     ],
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<LoginCubit>().signOut();
-                  },
-                  child: const Text('Wyloguj'),
                 ),
               ],
             ),
