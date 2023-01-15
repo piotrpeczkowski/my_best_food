@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_best_food/models/item_model.dart';
 
-class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({
+class ItemWidget extends StatelessWidget {
+  const ItemWidget({
     Key? key,
-    required this.restaurant,
-    required this.food,
-    required this.datetime,
-    required this.price,
-    required this.rank,
+    required this.itemModel,
   }) : super(key: key);
 
-  final String restaurant;
-  final String food;
-  final String datetime;
-  final String price;
-  final double rank;
+  final ItemModel itemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +26,7 @@ class CategoryWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  datetime,
+                  itemModel.dateTimeFormatted(),
                   // style:
                   //     GoogleFonts.lato(fontSize: 14, color: FontColor.black4),
                 ),
@@ -54,7 +47,7 @@ class CategoryWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          restaurant,
+                          itemModel.restaurant,
                           // style: GoogleFonts.lato(
                           //     fontSize: 16,
                           //     fontWeight: FontWeight.bold,
@@ -66,7 +59,7 @@ class CategoryWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(right: 5),
                             child: Text(
-                              food,
+                              itemModel.food,
                               // style: GoogleFonts.lato(
                               //     fontSize: 15,
                               //     fontWeight: FontWeight.normal,
@@ -74,7 +67,9 @@ class CategoryWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            price == '' ? '' : '| $price zł',
+                            itemModel.price == ''
+                                ? ''
+                                : '| ${itemModel.price} zł',
                             // style: GoogleFonts.lato(
                             //     fontSize: 15,
                             //     fontWeight: FontWeight.bold,
@@ -90,7 +85,7 @@ class CategoryWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 5.0),
                       child: Text(
-                        rank.toString(),
+                        itemModel.rank,
                         // style: GoogleFonts.lato(
                         //     fontSize: 20,
                         //     fontWeight: FontWeight.bold,

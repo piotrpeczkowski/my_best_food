@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_best_food/app/cubit/root_cubit.dart';
-import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
 
 class AccountPageContent extends StatelessWidget {
   const AccountPageContent({

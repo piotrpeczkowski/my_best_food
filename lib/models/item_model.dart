@@ -13,8 +13,8 @@ class ItemModel {
   final DateTime dateTime;
   final String restaurant;
   final String food;
-  final double price;
-  final double rank;
+  final String price;
+  final String rank;
 
   String dateTimeFormatted() {
     return DateFormat.yMMMMEEEEd().format(dateTime);

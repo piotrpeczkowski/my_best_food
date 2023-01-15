@@ -27,4 +27,43 @@ class ItemsRepository {
       }).toList();
     });
   }
+
+  Future<void> delete({required String id}) {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('items')
+        .doc(id)
+        .delete();
+  }
+
+  Future<void> add(
+    DateTime dateTime,
+    String restaurant,
+    String food,
+    String price,
+    String rank,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('items')
+        .add(
+      {
+        'restaurant': restaurant,
+        'food': food,
+        'dateTime': dateTime,
+        'price': price,
+        'rank': rank,
+      },
+    );
+  }
 }

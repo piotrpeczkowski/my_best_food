@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_best_food/features/add_page/add_page.dart';
 import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
 import 'package:my_best_food/features/home_page/account_content/account_content.dart';
 import 'package:my_best_food/features/home_page/restaurant_content/restaurant_content.dart';
@@ -44,7 +45,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Builder(builder: (context) {
         if (_currentIndex == 0) {
           return FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddPage(),
+                ),
+              );
+            },
             child: const Icon(Icons.add),
           );
         }

@@ -26,6 +26,17 @@ class HomeCubit extends Cubit<HomeState> {
       );
   }
 
+  Future<void> remove({required String documentID}) async {
+    try {
+      await _itemsRepository.delete(id: documentID);
+    } catch (error) {
+      emit(
+        const HomeState(removingErrorOccured: true),
+      );
+      start();
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
