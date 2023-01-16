@@ -12,6 +12,7 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('items')
+        .orderBy('dateTime', descending: true)
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
