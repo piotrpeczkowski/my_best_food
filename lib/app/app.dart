@@ -35,7 +35,10 @@ class RootPage extends StatelessWidget {
           if (user == null) {
             return LoginPage();
           }
-          return HomePage(title: Strings.title);
+          return HomePage(
+            title: Strings.title,
+            titleUser: Strings.titleUser,
+          );
         },
       ),
     );
@@ -44,4 +47,5 @@ class RootPage extends StatelessWidget {
 
 class Strings {
   static String title = 'myBestFood';
+  static String titleUser = 'Profil użytkownika';
 }

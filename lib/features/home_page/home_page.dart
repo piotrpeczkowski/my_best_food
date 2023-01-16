@@ -11,38 +11,42 @@ import 'package:my_best_food/repositories/auth_repository.dart';
 class HomePage extends StatefulWidget {
   const HomePage({
     required this.title,
+    required this.titleUser,
     Key? key,
   }) : super(key: key);
 
-  final String title;
+  final String title; // main title of app
+  final String titleUser; // title of user profile screen
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  var _currentIndex = 0;
+  var _currentIndex =
+      0; // variable which specifies screen to display (like a switch)
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: widget.title,
+        title: _currentIndex == 0 ? widget.title : widget.titleUser,
         appBar: AppBar(),
       ),
       bottomNavigationBar: MyBottomAppBar(
         setIndex0: () {
           setState(() {
-            _currentIndex = 0;
+            _currentIndex = 0; // to RestaurantContent
           });
         },
         setIndex1: () {
           setState(() {
-            _currentIndex = 1;
+            _currentIndex = 1; // to AccountContent
           });
         },
       ),
       floatingActionButton: Builder(builder: (context) {
+        // action of adding new position when restaurant list is display
         if (_currentIndex == 0) {
           return FloatingActionButton(
             onPressed: () {
@@ -55,6 +59,7 @@ class _HomePageState extends State<HomePage> {
             child: const Icon(Icons.add),
           );
         }
+        // action of sign out when account screen is display
         return BlocProvider(
           create: (context) => LoginCubit(AuthRepository()),
           child: BlocBuilder<LoginCubit, LoginState>(
