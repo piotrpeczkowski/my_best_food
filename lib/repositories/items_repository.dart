@@ -12,13 +12,12 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('items')
-        .orderBy('dateTime')
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
         return ItemModel(
           id: doc.id,
-          dateTime: doc['dateTime'],
+          dateTime: (doc['dateTime'] as Timestamp).toDate(),
           restaurant: doc['restaurant'],
           food: doc['food'],
           price: doc['price'],
