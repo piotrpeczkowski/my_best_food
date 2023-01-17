@@ -17,7 +17,8 @@ class _AddPageState extends State<AddPage> {
   String? _restaurant;
   String? _food;
   String? _price;
-  String? _rank;
+  double? _rank;
+  var rank = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +82,10 @@ class _AddPageState extends State<AddPage> {
                 onRankChanged: (newValue) {
                   setState(() {
                     _rank = newValue;
+                    rank = newValue;
                   });
                 },
+                rating: rank,
               ),
             );
           },
@@ -98,38 +101,123 @@ class _AddPageBody extends StatelessWidget {
     required this.onFoodChanged,
     required this.onPriceChanged,
     required this.onRankChanged,
+    required this.rating,
     Key? key,
   }) : super(key: key);
 
   final Function(String) onRestaurantChanged;
   final Function(String) onFoodChanged;
   final Function(String) onPriceChanged;
-  final Function(String) onRankChanged;
+  final Function(double) onRankChanged;
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          TextField(
-            onChanged: onRestaurantChanged,
-            decoration: const InputDecoration(label: Text('Restauracja')),
-          ),
-          TextField(
-            onChanged: onFoodChanged,
-            decoration: const InputDecoration(label: Text('Nazwa potrawy')),
-          ),
-          TextField(
-            onChanged: onPriceChanged,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(label: Text('Koszt')),
-          ),
-          TextField(
-            onChanged: onRankChanged,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(label: Text('Ocena')),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            // RESTAURANT TextField
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: TextField(
+                onChanged: onRestaurantChanged,
+                decoration: InputDecoration(
+                  label: const Text('Restauracja'),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
+            ),
+            // FOOD TextField
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: TextField(
+                onChanged: onFoodChanged,
+                decoration: InputDecoration(
+                  label: const Text('Nazwa potrawy'),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
+            ),
+            // PRICE TextField
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: TextField(
+                onChanged: onPriceChanged,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  label: const Text('Koszt'),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
+            ),
+            // RANK Slider
+            Padding(
+              padding: const EdgeInsets.only(top: 25.0),
+              child: Slider(
+                label: rating.toString(),
+                value: rating,
+                onChanged: onRankChanged,
+                min: 1,
+                max: 5,
+                divisions: 8,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'Ocena:',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 5, left: 5),
+                  child: Text(
+                    rating.toString(),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: rating >= 4.5
+                            ? const Color.fromARGB(255, 0, 143, 5)
+                            : rating <= 2.5
+                                ? Colors.red
+                                : Colors.black),
+                  ),
+                ),
+                Icon(
+                  Icons.star_border,
+                  color: Colors.black.withOpacity(0.7),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

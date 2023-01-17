@@ -14,7 +14,7 @@ class AddCubit extends Cubit<AddState> {
     String restaurant,
     String food,
     String price,
-    String rank,
+    double rank,
   ) async {
     try {
       await _itemsRepository.add(dateTime, restaurant, food, price, rank);

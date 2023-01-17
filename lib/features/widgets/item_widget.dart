@@ -85,7 +85,7 @@ class ItemWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 5.0),
                       child: Text(
-                        itemModel.rank,
+                        itemModel.rank.toString(),
                         // style: GoogleFonts.lato(
                         //     fontSize: 20,
                         //     fontWeight: FontWeight.bold,

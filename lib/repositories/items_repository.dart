@@ -46,7 +46,7 @@ class ItemsRepository {
     String restaurant,
     String food,
     String price,
-    String rank,
+    double rank,
   ) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
