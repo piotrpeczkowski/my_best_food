@@ -12,10 +12,10 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 10, top: 10, right: 10),
+      margin: const EdgeInsets.only(left: 15, top: 10, right: 15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.95),
+        color: Colors.black12,
         borderRadius: BorderRadius.circular(2.5),
       ),
       child: Column(
@@ -27,8 +27,7 @@ class ItemWidget extends StatelessWidget {
               children: [
                 Text(
                   itemModel.dateTimeFormatted(),
-                  // style:
-                  //     GoogleFonts.lato(fontSize: 14, color: FontColor.black4),
+                  style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ],
             ),
@@ -48,10 +47,10 @@ class ItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(
                           itemModel.restaurant,
-                          // style: GoogleFonts.lato(
-                          //     fontSize: 16,
-                          //     fontWeight: FontWeight.bold,
-                          //     color: Colors.black87),
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87),
                         ),
                       ),
                       Row(
@@ -60,20 +59,20 @@ class ItemWidget extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 5),
                             child: Text(
                               itemModel.food,
-                              // style: GoogleFonts.lato(
-                              //     fontSize: 15,
-                              //     fontWeight: FontWeight.normal,
-                              //     color: Colors.black87),
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black87),
                             ),
                           ),
                           Text(
                             itemModel.price == ''
                                 ? ''
                                 : '| ${itemModel.price} zł',
-                            // style: GoogleFonts.lato(
-                            //     fontSize: 15,
-                            //     fontWeight: FontWeight.bold,
-                            //     color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87),
                           ),
                         ],
                       ),
@@ -86,14 +85,14 @@ class ItemWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 5.0),
                       child: Text(
                         itemModel.rank.toString(),
-                        // style: GoogleFonts.lato(
-                        //     fontSize: 20,
-                        //     fontWeight: FontWeight.bold,
-                        //     color: rank >= 4.5
-                        //         ? const Color.fromARGB(255, 0, 143, 5)
-                        //         : rank <= 2.5
-                        //             ? Colors.red
-                        //             : Colors.black87.withOpacity(0.8)),
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: itemModel.rank >= 4.5
+                                ? const Color.fromARGB(255, 0, 143, 5)
+                                : itemModel.rank <= 2.5
+                                    ? Colors.red
+                                    : Colors.black87.withOpacity(0.8)),
                       ),
                     ),
                     const Icon(Icons.star_border),
