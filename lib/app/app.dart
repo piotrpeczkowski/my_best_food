@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_best_food/app/cubit/root_cubit.dart';
 import 'package:my_best_food/features/auth/login_page/login_page.dart';
 import 'package:my_best_food/features/home_page/home_page.dart';
+import 'package:my_best_food/features/splash_screen/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const RootPage(),
+      home: const SplashScreen(),
     );
   }
 }
