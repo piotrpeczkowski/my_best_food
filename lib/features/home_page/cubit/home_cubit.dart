@@ -37,6 +37,29 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future<void> addToArchive({
+    required DateTime dateTime,
+    required String restaurant,
+    required String food,
+    required String price,
+    required double rank,
+  }) async {
+    try {
+      await _itemsRepository.addToArchive(
+        dateTime,
+        restaurant,
+        food,
+        price,
+        rank,
+      );
+    } catch (error) {
+      emit(
+        const HomeState(removingErrorOccured: true),
+      );
+      start();
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

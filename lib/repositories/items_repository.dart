@@ -66,4 +66,79 @@ class ItemsRepository {
       },
     );
   }
+
+  Future<void> update(
+    String id,
+    String restaurant,
+    String food,
+    String price,
+    double rank,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('items')
+        .doc(id)
+        .update(
+      {
+        'restaurant': restaurant,
+        'food': food,
+        'price': price,
+        'rank': rank,
+      },
+    );
+  }
+
+  Future<ItemModel> get({required String id}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('items')
+        .doc(id)
+        .get();
+    return ItemModel(
+      id: doc.id,
+      dateTime: (doc['dateTime'] as Timestamp).toDate(),
+      restaurant: doc['restaurant'],
+      food: doc['food'],
+      price: doc['price'],
+      rank: doc['rank'],
+    );
+  }
+
+  // FOR ARCHIVE COLLECTIONS
+
+  Future<void> addToArchive(
+    DateTime dateTime,
+    String restaurant,
+    String food,
+    String price,
+    double rank,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('archiveItems')
+        .add(
+      {
+        'restaurant': restaurant,
+        'food': food,
+        'dateTime': dateTime,
+        'price': price,
+        'rank': rank,
+      },
+    );
+  }
 }

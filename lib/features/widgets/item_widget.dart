@@ -15,7 +15,7 @@ class ItemWidget extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, top: 10, right: 15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.black12,
+        color: Colors.black.withOpacity(0.05),
         borderRadius: BorderRadius.circular(2.5),
       ),
       child: Column(

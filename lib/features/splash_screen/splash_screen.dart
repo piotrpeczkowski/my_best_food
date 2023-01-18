@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             });
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white12,
+        color: Colors.white,
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
