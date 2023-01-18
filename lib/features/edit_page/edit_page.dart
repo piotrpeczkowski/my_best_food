@@ -75,24 +75,28 @@ class _EditPageState extends State<EditPage> {
                 ],
               ),
               body: _EditPageBody(
+                // for restaurant elements
                 restaurantLabel: itemModel.restaurant,
                 onRestaurantChanged: (newValue) {
                   setState(() {
                     _restaurant = newValue;
                   });
                 },
+                // for food elements
                 foodLabel: itemModel.food,
                 onFoodChanged: (newValue) {
                   setState(() {
                     _food = newValue;
                   });
                 },
+                // for price elements
                 priceLabel: itemModel.price,
                 onPriceChanged: (newValue) {
                   setState(() {
                     _price = newValue;
                   });
                 },
+                // for rank elements
                 rankLabel: itemModel.rank.toString(),
                 onRankChanged: (newValue) {
                   setState(() {
