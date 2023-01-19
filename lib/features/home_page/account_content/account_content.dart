@@ -21,8 +21,18 @@ class AccountPageContent extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     children: [
+                      const CircleAvatar(
+                        backgroundColor: Colors.black,
+                        radius: 51,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.white,
+                          backgroundImage:
+                              AssetImage('images/account_avatar.png'),
+                        ),
+                      ),
                       const Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.only(bottom: 10.0, top: 20),
                         child: Text('Jesteś zalogowany jako:'),
                       ),
                       Padding(
