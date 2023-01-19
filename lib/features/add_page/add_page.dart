@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:my_best_food/features/add_page/cubit/add_cubit.dart';
 import 'package:my_best_food/repositories/items_repository.dart';
 
@@ -159,10 +160,14 @@ class _AddPageBody extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
                 onChanged: onPriceChanged,
+                inputFormatters: const [
+                  PosInputFormatter(),
+                ],
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   label: const Text('Koszt'),
+                  suffixText: 'zł',
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,

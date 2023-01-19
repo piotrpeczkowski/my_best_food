@@ -189,6 +189,7 @@ class _EditPageBody extends StatelessWidget {
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   label: Text(priceLabel),
+                  suffixText: 'zł',
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
