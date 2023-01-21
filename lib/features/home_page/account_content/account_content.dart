@@ -21,9 +21,8 @@ class AccountPageContent extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.black,
-                        radius: 51,
+                      const Opacity(
+                        opacity: 0.3,
                         child: CircleAvatar(
                           radius: 50,
                           backgroundColor: Colors.white,
