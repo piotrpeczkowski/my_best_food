@@ -4,6 +4,7 @@ import 'package:my_best_food/features/add_page/add_page.dart';
 import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
 import 'package:my_best_food/features/home_page/account_content/account_content.dart';
 import 'package:my_best_food/features/home_page/restaurant_content/restaurant_content.dart';
+import 'package:my_best_food/features/user_page/user_page.dart';
 import 'package:my_best_food/features/widgets/my_app_bar.dart';
 import 'package:my_best_food/features/widgets/my_bottom_app_bar.dart';
 import 'package:my_best_food/repositories/auth_repository.dart';
@@ -30,8 +31,31 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: _currentIndex == 0 ? widget.title : widget.titleUser,
         appBar: AppBar(),
+        title: _currentIndex == 0 ? widget.title : widget.titleUser,
+        actions: [
+          Builder(builder: (context) {
+            if (_currentIndex == 0) {
+              return IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert),
+              );
+            }
+            if (_currentIndex == 1) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const UserPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.settings),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+        ],
       ),
       bottomNavigationBar: MyBottomAppBar(
         setIndex0: () {

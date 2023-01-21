@@ -30,13 +30,24 @@ class AccountPageContent extends StatelessWidget {
                               AssetImage('images/account_avatar.png'),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 10.0, top: 20),
-                        child: Text('Jesteś zalogowany jako:'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('${state.user?.email}'),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10.0, top: 20),
+                            child: Text('Jesteś zalogowany jako:'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              '${state.user?.email}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
