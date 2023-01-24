@@ -27,6 +27,12 @@ class _UserPageState extends State<UserPage> {
       child: BlocListener<UserCubit, UserState>(
         listener: (context, state) {
           if (state.saved) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                duration: Duration(seconds: 4),
+                content: Text('Zapisano'),
+              ),
+            );
             Navigator.of(context).pop();
           }
           if (state.errorMessage.isNotEmpty) {
