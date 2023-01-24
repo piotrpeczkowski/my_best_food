@@ -4,10 +4,12 @@ import 'package:my_best_food/features/add_page/add_page.dart';
 import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
 import 'package:my_best_food/features/home_page/account_content/account_content.dart';
 import 'package:my_best_food/features/home_page/restaurant_content/restaurant_content.dart';
+import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/features/user_page/user_page.dart';
 import 'package:my_best_food/features/widgets/my_app_bar.dart';
 import 'package:my_best_food/features/widgets/my_bottom_app_bar.dart';
 import 'package:my_best_food/repositories/auth_repository.dart';
+import 'package:my_best_food/repositories/user_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -42,15 +44,24 @@ class _HomePageState extends State<HomePage> {
               );
             }
             if (_currentIndex == 1) {
-              return IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const UserPage(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.settings),
+              return BlocProvider(
+                create: (context) => UserCubit(UserRepository()),
+                child: BlocBuilder<UserCubit, UserState>(
+                  builder: (context, state) {
+                    return IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => UserPage(
+                              id: 'userProfile',
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.settings),
+                    );
+                  },
+                ),
               );
             }
             return const SizedBox.shrink();
