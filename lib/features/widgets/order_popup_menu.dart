@@ -25,7 +25,9 @@ class _OrderPopupMenuState extends State<OrderPopupMenu> {
         });
         //context.read<HomeCubit>().orderBy(_selectedItem);
       },
-      child: const Text('SORTUJ'),
+      child: Row(
+        children: const [Text('SORTUJ'), Icon(Icons.more_vert)],
+      ),
       itemBuilder: (BuildContext bc) {
         return [
           PopupMenuItem(

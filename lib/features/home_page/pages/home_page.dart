@@ -8,6 +8,7 @@ import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/features/user_page/pages/user_page.dart';
 import 'package:my_best_food/features/widgets/my_app_bar.dart';
 import 'package:my_best_food/features/widgets/my_bottom_app_bar.dart';
+import 'package:my_best_food/features/widgets/order_popup_menu.dart';
 import 'package:my_best_food/repositories/auth_repository.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
 
@@ -38,10 +39,11 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Builder(builder: (context) {
             if (_currentIndex == 0) {
-              return IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
-              );
+              return const Center(
+                  child: Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: OrderPopupMenu(),
+              ));
             }
             if (_currentIndex == 1) {
               return BlocProvider(
