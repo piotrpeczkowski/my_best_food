@@ -16,11 +16,15 @@ class HomePage extends StatefulWidget {
   const HomePage({
     required this.title,
     required this.titleUser,
+    required this.userEmail,
     Key? key,
   }) : super(key: key);
 
+  final String userEmail; // user email from root page
   final String title; // main title of app
   final String titleUser; // title of user profile screen
+  final userProfile =
+      'userProfile'; // name of constant firebase collection for user informations
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -56,6 +60,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                             builder: (context) => UserPage(
                               id: 'userProfile',
+                              userEmail: widget.userEmail,
                             ),
                           ),
                         );

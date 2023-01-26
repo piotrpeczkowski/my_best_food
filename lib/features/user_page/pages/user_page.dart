@@ -6,10 +6,12 @@ import 'package:my_best_food/repositories/user_repository.dart';
 class UserPage extends StatefulWidget {
   UserPage({
     required this.id,
+    required this.userEmail,
     Key? key,
   }) : super(key: key);
 
   final String id;
+  final String userEmail;
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userCityController = TextEditingController();
   final TextEditingController _userGenderController = TextEditingController();
@@ -79,7 +81,33 @@ class _UserPageState extends State<UserPage> {
                 ),
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Edytuj profil'),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      context.read<UserCubit>().update(
+                            widget.id,
+                            widget._userNameController.text,
+                            widget._userCityController.text,
+                            widget._userGenderController.text,
+                          );
+                    },
+                    icon: const Icon(Icons.check),
+                  ),
+                ],
+              ),
+              body: _UserPageBody(
+                userEmail: widget.userEmail,
+                userNameLabel: 'Nazwa użytkownika',
+                userNameController: widget._userNameController,
+                userCityLabel: 'Wybierz miasto',
+                userCityController: widget._userCityController,
+                userGenderLabel: 'Wybierz płeć',
+                userGenderController: widget._userGenderController,
+              ),
+            );
           },
         ),
       ),

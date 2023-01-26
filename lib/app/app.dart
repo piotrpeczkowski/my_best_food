@@ -39,6 +39,7 @@ class RootPage extends StatelessWidget {
           return HomePage(
             title: Strings.title,
             titleUser: Strings.titleUser,
+            userEmail: '${state.user?.email}',
           );
         },
       ),
