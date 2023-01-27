@@ -23,8 +23,9 @@ class HomePage extends StatefulWidget {
   final String userEmail; // user email from root page
   final String title; // main title of app
   final String titleUser; // title of user profile screen
-  final userProfile =
-      'userProfile'; // name of constant firebase collection for user informations
+
+  // name of constant firebase collection for user informations
+  final userProfile = 'userProfile';
 
   @override
   State<HomePage> createState() => _HomePageState();

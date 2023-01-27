@@ -29,6 +29,8 @@ class AccountPageContent extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 50,
                           backgroundColor: Colors.white,
+                          // default image for user avatar
+                          // TODO: implement user avatar display from DB
                           backgroundImage:
                               AssetImage('images/account_avatar.png'),
                         ),
@@ -43,6 +45,7 @@ class AccountPageContent extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
+                              // email of logged user
                               '${state.user?.email}',
                               style: const TextStyle(
                                 fontSize: 16,
@@ -50,6 +53,7 @@ class AccountPageContent extends StatelessWidget {
                               ),
                             ),
                           ),
+                          // TODO: add saved info from userProfile collection
                         ],
                       ),
                     ],

@@ -25,7 +25,7 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          UserCubit(UserRepository())..getItemWithID(widget.id),
+          UserCubit(UserRepository())..getUserInfoWithID(widget.id),
       child: BlocListener<UserCubit, UserState>(
         listener: (context, state) {
           if (state.saved) {

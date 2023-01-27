@@ -10,7 +10,7 @@ class UserCubit extends Cubit<UserState> {
 
   final UserRepository _userRepository;
 
-  Future<void> getItemWithID(String id) async {
+  Future<void> getUserInfoWithID(String id) async {
     final userModel = await _userRepository.get(id: id);
     emit(UserState(userModel: userModel));
   }
