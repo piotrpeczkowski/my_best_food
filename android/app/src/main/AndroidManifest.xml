@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.my_best_food">
+    package="com.piotrpeczkowski.my_best_food">
    <application
         android:label="my_best_food"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:exported="true"
