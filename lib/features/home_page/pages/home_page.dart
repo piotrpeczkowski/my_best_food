@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
         title: _currentIndex == 0 ? widget.title : widget.titleUser,
         actions: [
           Builder(builder: (context) {
+            // AppBar Icon for list screen
             if (_currentIndex == 0) {
               return const Center(
                   child: Padding(
@@ -49,6 +50,7 @@ class _HomePageState extends State<HomePage> {
                 child: OrderPopupMenu(),
               ));
             }
+            // AppBar Icon for account  screen
             if (_currentIndex == 1) {
               return BlocProvider(
                 create: (context) => UserCubit(UserRepository()),
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => UserPage(
-                              id: 'userProfile',
+                              id: widget.userProfile,
                               userEmail: widget.userEmail,
                             ),
                           ),
@@ -121,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         if (_currentIndex == 0) {
           return const RestaurantPageContent();
         }
-        return const AccountPageContent();
+        return AccountPageContent(id: widget.userProfile);
       }),
     );
   }

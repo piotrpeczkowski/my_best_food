@@ -4,8 +4,11 @@ import 'package:my_best_food/app/cubit/root_cubit.dart';
 
 class AccountPageContent extends StatelessWidget {
   const AccountPageContent({
+    required this.id,
     Key? key,
   }) : super(key: key);
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
