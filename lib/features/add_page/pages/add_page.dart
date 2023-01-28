@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_best_food/features/add_page/cubit/add_cubit.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/repositories/items_repository.dart';
 
 class AddPage extends StatefulWidget {
@@ -43,7 +45,17 @@ class _AddPageState extends State<AddPage> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Dodaj nową pozycję'),
+                iconTheme: const IconThemeData(
+                  color: ItemColor.itemWhite,
+                ),
+                backgroundColor: ItemColor.itemBlack54,
+                title: Text(
+                  'Dodaj nową pozycję',
+                  style: GoogleFonts.lato(
+                    fontSize: 22,
+                    color: ItemColor.itemWhite,
+                  ),
+                ),
                 actions: [
                   IconButton(
                     onPressed: _restaurant == null ||
@@ -60,7 +72,15 @@ class _AddPageState extends State<AddPage> {
                                   _rank!,
                                 );
                           },
-                    icon: const Icon(Icons.check),
+                    icon: Icon(
+                      Icons.check,
+                      color: _restaurant == null ||
+                              _food == null ||
+                              _price == null ||
+                              _rank == null
+                          ? ItemColor.itemOrange1.withOpacity(0.5)
+                          : ItemColor.itemOrange1,
+                    ),
                   ),
                 ],
               ),

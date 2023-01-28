@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_best_food/features/home_page/cubit/home_cubit.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/repositories/items_repository.dart';
 
 // TODO: implement ordering to block logic
@@ -33,7 +34,19 @@ class _OrderPopupMenuState extends State<OrderPopupMenu> {
               //context.read<HomeCubit>().orderBy(_selectedItem);
             },
             child: Row(
-              children: const [Text('SORTUJ'), Icon(Icons.more_vert)],
+              children: [
+                Text(
+                  'SORTUJ',
+                  style: GoogleFonts.lato(
+                    fontSize: 14,
+                    color: ItemColor.itemWhite,
+                  ),
+                ),
+                const Icon(
+                  Icons.more_vert,
+                  color: ItemColor.itemWhite,
+                )
+              ],
             ),
             itemBuilder: (BuildContext bc) {
               return [

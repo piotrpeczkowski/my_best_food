@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
 
@@ -55,7 +57,17 @@ class _UserPageState extends State<UserPage> {
               widget._userGenderController.text = userModel.userGender;
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Edytuj profil'),
+                  iconTheme: const IconThemeData(
+                    color: ItemColor.itemWhite,
+                  ),
+                  backgroundColor: ItemColor.itemBlack54,
+                  title: Text(
+                    'Edytuj profil',
+                    style: GoogleFonts.lato(
+                      fontSize: 22,
+                      color: ItemColor.itemWhite,
+                    ),
+                  ),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -66,7 +78,10 @@ class _UserPageState extends State<UserPage> {
                               widget._userGenderController.text,
                             );
                       },
-                      icon: const Icon(Icons.check),
+                      icon: const Icon(
+                        Icons.check,
+                        color: ItemColor.itemOrange1,
+                      ),
                     ),
                   ],
                 ),
@@ -83,7 +98,14 @@ class _UserPageState extends State<UserPage> {
             }
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Edytuj profil'),
+                backgroundColor: ItemColor.itemBlack54,
+                title: Text(
+                  'Edytuj profil',
+                  style: GoogleFonts.lato(
+                    fontSize: 22,
+                    color: ItemColor.itemWhite,
+                  ),
+                ),
                 actions: [
                   IconButton(
                     onPressed: () {
@@ -94,7 +116,10 @@ class _UserPageState extends State<UserPage> {
                             widget._userGenderController.text,
                           );
                     },
-                    icon: const Icon(Icons.check),
+                    icon: const Icon(
+                      Icons.check,
+                      color: ItemColor.itemWhite,
+                    ),
                   ),
                 ],
               ),
@@ -161,7 +186,8 @@ class _UserPageBody extends StatelessWidget {
                 ),
                 Text(
                   userEmail,
-                  style: const TextStyle(
+                  style: GoogleFonts.lato(
+                    color: ItemColor.itemBlack87,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

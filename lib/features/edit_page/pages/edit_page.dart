@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_best_food/features/edit_page/cubit/edit_cubit.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/repositories/items_repository.dart';
 
 class EditPage extends StatefulWidget {
@@ -49,7 +51,16 @@ class _EditPageState extends State<EditPage> {
             }
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Edytuj pozycję'),
+                iconTheme: const IconThemeData(
+                  color: ItemColor.itemWhite,
+                ),
+                title: Text(
+                  'Edytuj pozycję',
+                  style: GoogleFonts.lato(
+                    fontSize: 22,
+                    color: ItemColor.itemWhite,
+                  ),
+                ),
                 actions: [
                   IconButton(
                     onPressed:

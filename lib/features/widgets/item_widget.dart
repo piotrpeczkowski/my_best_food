@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/models/item_model.dart';
 
 class ItemWidget extends StatelessWidget {
@@ -15,7 +17,7 @@ class ItemWidget extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, top: 10, right: 15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.05),
+        color: ItemColor.itemBlack.withOpacity(0.05),
         borderRadius: BorderRadius.circular(2.5),
       ),
       child: Column(
@@ -27,7 +29,11 @@ class ItemWidget extends StatelessWidget {
               children: [
                 Text(
                   itemModel.dateTimeFormatted(),
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                  style: GoogleFonts.lato(
+                    color: ItemColor.itemBlack54,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ],
             ),
@@ -47,10 +53,11 @@ class ItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(
                           itemModel.restaurant,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87),
+                          style: GoogleFonts.lato(
+                            color: ItemColor.itemBlack87,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Row(
@@ -59,20 +66,22 @@ class ItemWidget extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 5),
                             child: Text(
                               itemModel.food,
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black87),
+                              style: GoogleFonts.lato(
+                                color: ItemColor.itemBlack87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
                           Text(
                             itemModel.price == ''
                                 ? ''
                                 : '| ${itemModel.price} zł',
-                            style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87),
+                            style: GoogleFonts.lato(
+                              color: ItemColor.itemBlack87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -85,17 +94,20 @@ class ItemWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 5.0),
                       child: Text(
                         itemModel.rank.toString(),
-                        style: TextStyle(
+                        style: GoogleFonts.lato(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: itemModel.rank >= 4.5
                                 ? const Color.fromARGB(255, 0, 143, 5)
                                 : itemModel.rank <= 2.5
-                                    ? Colors.red
-                                    : Colors.black87.withOpacity(0.8)),
+                                    ? ItemColor.itemRed
+                                    : ItemColor.itemBlack87.withOpacity(0.8)),
                       ),
                     ),
-                    const Icon(Icons.star_border),
+                    const Icon(
+                      Icons.star_border,
+                      color: ItemColor.itemBlack54,
+                    ),
                   ],
                 ),
               ],

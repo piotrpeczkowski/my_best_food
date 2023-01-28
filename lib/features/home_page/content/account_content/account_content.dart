@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_best_food/app/cubit/root_cubit.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 
 class AccountPageContent extends StatelessWidget {
   const AccountPageContent({
@@ -38,16 +40,25 @@ class AccountPageContent extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 10.0, top: 20),
-                            child: Text('Jesteś zalogowany jako:'),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 10.0, top: 20),
+                            child: Text(
+                              'Jesteś zalogowany jako:',
+                              style: GoogleFonts.lato(
+                                color: ItemColor.itemBlack87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
                               // email of logged user
                               '${state.user?.email}',
-                              style: const TextStyle(
+                              style: GoogleFonts.lato(
+                                color: ItemColor.itemBlack87,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),

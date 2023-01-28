@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 
 class MyBottomAppBar extends StatelessWidget {
   const MyBottomAppBar({
@@ -15,10 +16,10 @@ class MyBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: Colors.blue,
+      color: ItemColor.itemBlack54,
       elevation: 0.5,
       shape: const CircularNotchedRectangle(),
-      notchMargin: 5,
+      notchMargin: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
         child: Row(
@@ -28,7 +29,9 @@ class MyBottomAppBar extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.list,
-                color: currentIndex == 0 ? Colors.orange : Colors.white,
+                color: currentIndex == 0
+                    ? ItemColor.itemOrange1
+                    : ItemColor.itemWhite,
                 size: 24,
               ),
               onPressed: () {
@@ -38,7 +41,9 @@ class MyBottomAppBar extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.person,
-                color: currentIndex == 1 ? Colors.orange : Colors.white,
+                color: currentIndex == 1
+                    ? ItemColor.itemOrange1
+                    : ItemColor.itemWhite,
                 size: 24,
               ),
               onPressed: () {

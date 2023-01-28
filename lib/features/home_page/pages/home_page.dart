@@ -4,6 +4,7 @@ import 'package:my_best_food/features/add_page/pages/add_page.dart';
 import 'package:my_best_food/features/auth/login_page/cubit/login_cubit.dart';
 import 'package:my_best_food/features/home_page/content/account_content/account_content.dart';
 import 'package:my_best_food/features/home_page/content/restaurant_content/restaurant_content.dart';
+import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/features/user_page/pages/user_page.dart';
 import 'package:my_best_food/features/widgets/my_app_bar.dart';
@@ -68,7 +69,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.settings),
+                      icon: const Icon(
+                        Icons.settings,
+                        color: ItemColor.itemWhite,
+                      ),
                     );
                   },
                 ),
@@ -95,6 +99,7 @@ class _HomePageState extends State<HomePage> {
         // action of adding new position when restaurant list is display
         if (_currentIndex == 0) {
           return FloatingActionButton(
+            backgroundColor: ItemColor.itemOrange1,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -102,7 +107,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
-            child: const Icon(Icons.add),
+            child: const Icon(
+              Icons.add,
+              color: ItemColor.itemWhite,
+            ),
           );
         }
         // action of sign out when account screen is display
@@ -111,10 +119,14 @@ class _HomePageState extends State<HomePage> {
           child: BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               return FloatingActionButton(
+                backgroundColor: ItemColor.itemOrange1,
                 onPressed: () {
                   context.read<LoginCubit>().signOut();
                 },
-                child: const Icon(Icons.logout),
+                child: const Icon(
+                  Icons.logout,
+                  color: ItemColor.itemWhite,
+                ),
               );
             },
           ),
