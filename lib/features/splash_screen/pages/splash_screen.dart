@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_best_food/app/app.dart';
+import 'package:my_best_food/root/pages/root_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({

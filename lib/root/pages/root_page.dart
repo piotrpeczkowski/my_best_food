@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_best_food/app/cubit/root_cubit.dart';
+import 'package:my_best_food/root/cubit/root_cubit.dart';
 import 'package:my_best_food/features/auth/login_page/pages/login_page.dart';
 import 'package:my_best_food/features/home_page/pages/home_page.dart';
 import 'package:my_best_food/features/splash_screen/pages/splash_screen.dart';
