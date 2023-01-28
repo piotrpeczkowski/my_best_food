@@ -79,6 +79,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: MyBottomAppBar(
+        currentIndex: _currentIndex,
         setIndex0: () {
           setState(() {
             _currentIndex = 0; // to RestaurantContent

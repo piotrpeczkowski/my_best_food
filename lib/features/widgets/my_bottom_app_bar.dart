@@ -4,11 +4,13 @@ class MyBottomAppBar extends StatelessWidget {
   const MyBottomAppBar({
     required this.setIndex0,
     required this.setIndex1,
+    required this.currentIndex,
     Key? key,
   }) : super(key: key);
 
   final Function setIndex0;
   final Function setIndex1;
+  final dynamic currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,9 @@ class MyBottomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.list,
-                color: Colors.white,
+                color: currentIndex == 0 ? Colors.orange : Colors.white,
                 size: 24,
               ),
               onPressed: () {
@@ -34,9 +36,9 @@ class MyBottomAppBar extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: currentIndex == 1 ? Colors.orange : Colors.white,
                 size: 24,
               ),
               onPressed: () {
