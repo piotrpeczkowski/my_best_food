@@ -52,14 +52,14 @@ class UserRepository {
     );
   }
 
-  Future pickImage(ImageSource source, File? imageFile) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      imageFile = imageTemporary;
-    } catch (error) {
-      throw Exception(error);
-    }
-  }
+  // Future pickImage(ImageSource source, File? imageFile) async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: source);
+  //     if (image == null) return;
+  //     final imageTemporary = File(image.path);
+  //     imageFile = imageTemporary;
+  //   } catch (error) {
+  //     throw Exception(error);
+  //   }
+  // }
 }
