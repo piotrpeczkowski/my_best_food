@@ -1,15 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({
@@ -29,29 +28,39 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  File? _image;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
-  Future _pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      // final imagePermanent = await saveImage(image.path);
-      setState(() {
-        _image = imageTemporary;
-        // _image = imagePermanent;
-      });
-    } on PlatformException catch (error) {
-      throw Exception(error);
-    }
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
-  // Future<File> saveImage(String imagePath) async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final name = basename(imagePath);
-  //   final image = File('${directory.path}/$name');
-  //   return File(imagePath).copy(image.path);
-  // }
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +125,8 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
                 body: _UserPageBody(
-                  image: _image,
-                  onTap: () => _pickImage,
+                  image: _photo,
+                  onTap: () => imgFromCamera,
                   // onTap: () {
                   //   context.read<UserCubit>().pickImage(
                   //         ImageSource.camera,
@@ -162,8 +171,8 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               body: _UserPageBody(
-                image: _image,
-                onTap: () => _pickImage,
+                image: _photo,
+                onTap: () => imgFromCamera,
                 userEmail: widget.userEmail,
                 userNameLabel: 'Nazwa użytkownika',
                 userNameController: widget._userNameController,

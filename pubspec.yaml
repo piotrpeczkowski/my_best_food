@@ -47,6 +47,8 @@ dependencies:
   flutter_multi_formatter: ^2.10.2
   image_picker: ^0.8.6+1
   path_provider: ^2.0.12
+  firebase_storage: ^11.0.10
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:
