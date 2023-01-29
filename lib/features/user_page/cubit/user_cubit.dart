@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:my_best_food/models/user_model.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
@@ -27,5 +30,12 @@ class UserCubit extends Cubit<UserState> {
     } catch (error) {
       emit(UserState(errorMessage: error.toString()));
     }
+  }
+
+  Future pickImage(
+    ImageSource source,
+    File? imageFile,
+  ) async {
+    await _userRepository.pickImage(source, imageFile);
   }
 }

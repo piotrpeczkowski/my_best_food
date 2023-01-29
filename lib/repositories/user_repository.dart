@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/models/user_model.dart';
 
 class UserRepository {
@@ -47,5 +50,16 @@ class UserRepository {
       },
       SetOptions(merge: true),
     );
+  }
+
+  Future pickImage(ImageSource source, File? imageFile) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      imageFile = imageTemporary;
+    } catch (error) {
+      throw Exception(error);
+    }
   }
 }

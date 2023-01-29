@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({
@@ -23,6 +29,29 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  File? _image;
+
+  Future _pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      // final imagePermanent = await saveImage(image.path);
+      setState(() {
+        _image = imageTemporary;
+      });
+    } on PlatformException catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  // Future<File> saveImage(String imagePath) async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final name = basename(imagePath);
+  //   final image = File('${directory.path}/$name');
+  //   return File(imagePath).copy(image.path);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -86,6 +115,14 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
                 body: _UserPageBody(
+                  image: _image,
+                  onTap: () => _pickImage,
+                  // onTap: () {
+                  //   context.read<UserCubit>().pickImage(
+                  //         ImageSource.camera,
+                  //         _image,
+                  //       );
+                  // },
                   userEmail: userModel.email,
                   userNameLabel: 'Nazwa użytkownika',
                   userNameController: widget._userNameController,
@@ -124,6 +161,8 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               body: _UserPageBody(
+                image: _image,
+                onTap: () => _pickImage,
                 userEmail: widget.userEmail,
                 userNameLabel: 'Nazwa użytkownika',
                 userNameController: widget._userNameController,
@@ -142,6 +181,7 @@ class _UserPageState extends State<UserPage> {
 
 class _UserPageBody extends StatelessWidget {
   const _UserPageBody({
+    required this.onTap,
     required this.userNameController,
     required this.userCityController,
     required this.userGenderController,
@@ -149,9 +189,11 @@ class _UserPageBody extends StatelessWidget {
     required this.userCityLabel,
     required this.userGenderLabel,
     required this.userEmail,
+    required this.image,
     Key? key,
   }) : super(key: key);
 
+  final Function onTap;
   final TextEditingController userNameController;
   final TextEditingController userCityController;
   final TextEditingController userGenderController;
@@ -159,6 +201,7 @@ class _UserPageBody extends StatelessWidget {
   final String userCityLabel;
   final String userGenderLabel;
   final String userEmail;
+  final File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -173,15 +216,25 @@ class _UserPageBody extends StatelessWidget {
             color: Colors.black12,
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  child: Opacity(
-                    opacity: 0.3,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage('images/account_avatar.png'),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, bottom: 15),
+                  child: InkWell(
+                    onTap: onTap(),
+                    child: image == null
+                        ? const Opacity(
+                            opacity: 0.3,
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  AssetImage('images/account_avatar.png'),
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: FileImage(image!),
+                          ),
                   ),
                 ),
                 Text(
