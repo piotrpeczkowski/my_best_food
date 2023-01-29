@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_best_food/models/item_model.dart';
 
 class ItemsRepository {
-  Stream<List<ItemModel>> getItemsStream() {
+  Stream<List<ItemModel>> getItemsStream(
+    bool isDescending,
+    String orderBy,
+  ) {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -12,7 +15,7 @@ class ItemsRepository {
         .collection('users')
         .doc(userID)
         .collection('items')
-        .orderBy('dateTime', descending: true)
+        .orderBy(orderBy, descending: isDescending)
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {

@@ -3,26 +3,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_best_food/features/edit_page/cubit/edit_cubit.dart';
 import 'package:my_best_food/features/styles/styles.dart';
+import 'package:my_best_food/models/item_model.dart';
 import 'package:my_best_food/repositories/items_repository.dart';
 
 class EditPage extends StatefulWidget {
-  const EditPage({
+  EditPage({
     required this.id,
+    required this.itemModel,
     Key? key,
   }) : super(key: key);
 
   final String id;
+  final ItemModel itemModel;
+
+  final TextEditingController _restaurantController = TextEditingController();
+  final TextEditingController _foodController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
 
   @override
   State<EditPage> createState() => _EditPageState();
 }
 
 class _EditPageState extends State<EditPage> {
-  String? _restaurant;
-  String? _food;
-  String? _price;
-  double? _rank;
-  var rank = 1.0;
+  double? _rating;
+
+  @override
+  void initState() {
+    super.initState();
+    _rating = widget.itemModel.rank;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,78 +55,74 @@ class _EditPageState extends State<EditPage> {
         child: BlocBuilder<EditCubit, EditState>(
           builder: (context, state) {
             final itemModel = state.itemModel;
-            if (itemModel == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return Scaffold(
-              appBar: AppBar(
-                iconTheme: const IconThemeData(
-                  color: ItemColor.itemWhite,
-                ),
-                title: Text(
-                  'Edytuj pozycję',
-                  style: GoogleFonts.lato(
-                    fontSize: 22,
+            if (itemModel != null) {
+              widget._restaurantController.text = itemModel.restaurant;
+              widget._foodController.text = itemModel.food;
+              widget._priceController.text = itemModel.price;
+              return Scaffold(
+                appBar: AppBar(
+                  iconTheme: const IconThemeData(
                     color: ItemColor.itemWhite,
                   ),
-                ),
-                actions: [
-                  IconButton(
-                    onPressed:
-                        _restaurant == null || _food == null || _price == null
-                            ? null
-                            : () {
-                                context.read<EditCubit>().update(
-                                      widget.id,
-                                      _restaurant!,
-                                      _food!,
-                                      _price!,
-                                      _rank!,
-                                    );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(seconds: 4),
-                                    content: Text('Zaktualizowano'),
-                                  ),
-                                );
-                              },
-                    icon: const Icon(Icons.check),
+                  backgroundColor: ItemColor.itemBlack54,
+                  title: Text(
+                    'Edytuj pozycję',
+                    style: GoogleFonts.lato(
+                      fontSize: 22,
+                      color: ItemColor.itemWhite,
+                    ),
                   ),
-                ],
-              ),
-              body: _EditPageBody(
-                // for restaurant elements
-                restaurantLabel: itemModel.restaurant,
-                onRestaurantChanged: (newValue) {
-                  setState(() {
-                    _restaurant = newValue;
-                  });
-                },
-                // for food elements
-                foodLabel: itemModel.food,
-                onFoodChanged: (newValue) {
-                  setState(() {
-                    _food = newValue;
-                  });
-                },
-                // for price elements
-                priceLabel: itemModel.price,
-                onPriceChanged: (newValue) {
-                  setState(() {
-                    _price = newValue;
-                  });
-                },
-                // for rank elements
-                rankLabel: itemModel.rank.toString(),
-                onRankChanged: (newValue) {
-                  setState(() {
-                    _rank = newValue;
-                    rank = newValue;
-                  });
-                },
-                rating: itemModel.rank,
-              ),
-            );
+                  actions: [
+                    IconButton(
+                      onPressed: widget._restaurantController.text == '' ||
+                              widget._foodController.text == '' ||
+                              widget._priceController.text == '' ||
+                              _rating == null
+                          ? null
+                          : () {
+                              context.read<EditCubit>().update(
+                                    widget.id,
+                                    widget._restaurantController.text,
+                                    widget._foodController.text,
+                                    widget._priceController.text,
+                                    _rating!,
+                                  );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  duration: Duration(seconds: 4),
+                                  content: Text('Zaktualizowano'),
+                                ),
+                              );
+                            },
+                      icon: const Icon(
+                        Icons.check,
+                        color: ItemColor.itemOrange1,
+                      ),
+                    ),
+                  ],
+                ),
+                body: _EditPageBody(
+                  // for restaurant elements
+                  restaurantLabel: 'Restauracja',
+                  restaurantController: widget._restaurantController,
+                  // for food elements
+                  foodLabel: 'Jedzenie',
+                  foodController: widget._foodController,
+                  // for price elements
+                  priceLabel: 'Koszt',
+                  priceController: widget._priceController,
+                  // for rank elements
+                  rankLabel: _rating.toString(),
+                  onRankChanged: (newValue) {
+                    setState(() {
+                      _rating = newValue;
+                    });
+                  },
+                  rankValue: _rating!,
+                ),
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
@@ -127,27 +132,27 @@ class _EditPageState extends State<EditPage> {
 
 class _EditPageBody extends StatelessWidget {
   const _EditPageBody({
-    required this.onRestaurantChanged,
+    required this.restaurantController,
     required this.restaurantLabel,
-    required this.onFoodChanged,
+    required this.foodController,
     required this.foodLabel,
-    required this.onPriceChanged,
+    required this.priceController,
     required this.priceLabel,
     required this.onRankChanged,
     required this.rankLabel,
-    required this.rating,
+    required this.rankValue,
     Key? key,
   }) : super(key: key);
 
-  final Function(String) onRestaurantChanged;
+  final TextEditingController restaurantController;
   final String restaurantLabel;
-  final Function(String) onFoodChanged;
+  final TextEditingController foodController;
   final String foodLabel;
-  final Function(String) onPriceChanged;
+  final TextEditingController priceController;
   final String priceLabel;
   final Function(double) onRankChanged;
   final String rankLabel;
-  final double rating;
+  final double rankValue;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +165,7 @@ class _EditPageBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
-                onChanged: onRestaurantChanged,
+                controller: restaurantController,
                 decoration: InputDecoration(
                   label: Text(restaurantLabel),
                   focusedBorder: const OutlineInputBorder(
@@ -178,7 +183,8 @@ class _EditPageBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
-                onChanged: onFoodChanged,
+                // onChanged: onFoodChanged,
+                controller: foodController,
                 decoration: InputDecoration(
                   label: Text(foodLabel),
                   focusedBorder: const OutlineInputBorder(
@@ -196,11 +202,13 @@ class _EditPageBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
-                onChanged: onPriceChanged,
+                // onChanged: onPriceChanged,
+                controller: priceController,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   label: Text(priceLabel),
+                  suffixText: 'zł',
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
@@ -216,8 +224,8 @@ class _EditPageBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
               child: Slider(
-                label: rating.toString(),
-                value: rating,
+                label: rankValue.toString(),
+                value: rankValue,
                 onChanged: onRankChanged,
                 min: 1,
                 max: 5,
@@ -237,13 +245,13 @@ class _EditPageBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 5, left: 5),
                   child: Text(
-                    rating.toString(),
+                    rankValue.toString(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: rating >= 4.5
+                        color: rankValue >= 4.5
                             ? const Color.fromARGB(255, 0, 143, 5)
-                            : rating <= 2.5
+                            : rankValue <= 2.5
                                 ? Colors.red
                                 : Colors.black),
                   ),

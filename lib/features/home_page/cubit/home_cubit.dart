@@ -14,16 +14,33 @@ class HomeCubit extends Cubit<HomeState> {
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> start() async {
-    _streamSubscription = _itemsRepository.getItemsStream().listen(
+  Future<void> orderBy(int selectedItem) async {
+    if (selectedItem == 0) {
+      start(true, 'dateTime');
+    } else if (selectedItem == 1) {
+      start(false, 'dateTime');
+    } else if (selectedItem == 2) {
+      start(false, 'restaurant');
+    } else {
+      start(true, 'restaurant');
+    }
+  }
+
+  Future<void> start(
+    bool isDescending,
+    String orderBy,
+  ) async {
+    //_streamSubscription?.cancel();
+    _streamSubscription =
+        _itemsRepository.getItemsStream(isDescending, orderBy).listen(
       (items) {
         emit(HomeState(items: items));
       },
     )..onError(
-        (error) {
-          emit(const HomeState(loadingErrorOccured: true));
-        },
-      );
+            (error) {
+              emit(const HomeState(loadingErrorOccured: true));
+            },
+          );
   }
 
   Future<void> remove({required String documentID}) async {
@@ -33,7 +50,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         const HomeState(removingErrorOccured: true),
       );
-      start();
+      start(true, 'dateTime');
     }
   }
 
@@ -56,7 +73,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         const HomeState(removingErrorOccured: true),
       );
-      start();
+      start(true, 'dateTime');
     }
   }
 
