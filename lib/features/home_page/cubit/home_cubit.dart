@@ -20,9 +20,17 @@ class HomeCubit extends Cubit<HomeState> {
     } else if (selectedItem == 1) {
       start(false, 'dateTime');
     } else if (selectedItem == 2) {
-      start(false, 'restaurant');
-    } else {
       start(true, 'restaurant');
+    } else if (selectedItem == 3) {
+      start(false, 'restaurant');
+    } else if (selectedItem == 4) {
+      start(true, 'rank');
+    } else if (selectedItem == 5) {
+      start(false, 'rank');
+    } else if (selectedItem == 6) {
+      start(true, 'price');
+    } else {
+      start(false, 'price');
     }
   }
 
@@ -30,7 +38,7 @@ class HomeCubit extends Cubit<HomeState> {
     bool isDescending,
     String orderBy,
   ) async {
-    //_streamSubscription?.cancel();
+    _streamSubscription?.cancel();
     _streamSubscription =
         _itemsRepository.getItemsStream(isDescending, orderBy).listen(
       (items) {

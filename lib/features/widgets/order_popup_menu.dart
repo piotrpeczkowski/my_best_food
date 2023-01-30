@@ -49,7 +49,7 @@ class _OrderPopupMenuState extends State<OrderPopupMenu> {
                 enabled: false,
                 child: Text(
                   'SORTUJ:',
-                  style: GoogleFonts.lato(),
+                  style: GoogleFonts.kanit(fontWeight: FontWeight.bold),
                 ),
               ),
               PopupMenuItem(
@@ -77,6 +77,34 @@ class _OrderPopupMenuState extends State<OrderPopupMenu> {
                 value: 3,
                 child: Text(
                   'Alfabetycznie Z-A',
+                  style: GoogleFonts.lato(),
+                ),
+              ),
+              PopupMenuItem(
+                value: 4,
+                child: Text(
+                  'Od najwyższej oceny',
+                  style: GoogleFonts.lato(),
+                ),
+              ),
+              PopupMenuItem(
+                value: 5,
+                child: Text(
+                  'Od najniższej oceny',
+                  style: GoogleFonts.lato(),
+                ),
+              ),
+              PopupMenuItem(
+                value: 6,
+                child: Text(
+                  'Najwyższa cena',
+                  style: GoogleFonts.lato(),
+                ),
+              ),
+              PopupMenuItem(
+                value: 7,
+                child: Text(
+                  'Najniższa cena',
                   style: GoogleFonts.lato(),
                 ),
               ),
