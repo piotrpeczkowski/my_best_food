@@ -47,6 +47,9 @@ class _UserPageState extends State<UserPage> {
     });
   }
 
+  // TODO: rebuild uploadFile function for better sync with firebase storage
+  // TODO: build function for read image by userID from firebase storage
+
   Future uploadFile() async {
     if (_photo == null) return;
     final fileName = basename(_photo!.path);
