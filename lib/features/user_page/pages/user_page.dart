@@ -42,7 +42,7 @@ class _UserPageState extends State<UserPage> {
         _photo = File(pickedFile.path);
         uploadFile();
       } else {
-        print('No image selected.');
+        //print('No image selected.');
       }
     });
   }
@@ -58,7 +58,8 @@ class _UserPageState extends State<UserPage> {
           .child('file/');
       await ref.putFile(_photo!);
     } catch (e) {
-      print('error occured');
+      //print('error occured');
+      throw Exception(e);
     }
   }
 
@@ -232,12 +233,20 @@ class _UserPageBody extends StatelessWidget {
                     onTap: onTap(),
                     child: image == null
                         ? const Opacity(
-                            opacity: 0.3,
+                            opacity: 1,
                             child: CircleAvatar(
                               radius: 50,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  AssetImage('images/account_avatar.png'),
+                              backgroundColor: ItemColor.itemBlack87,
+                              child: CircleAvatar(
+                                radius: 49,
+                                backgroundColor:
+                                    Color.fromARGB(255, 200, 200, 200),
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  color: ItemColor.itemBlack54,
+                                  size: 50,
+                                ),
+                              ),
                             ),
                           )
                         : CircleAvatar(
