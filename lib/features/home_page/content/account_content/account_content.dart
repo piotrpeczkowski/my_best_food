@@ -47,8 +47,8 @@ class AccountPageContent extends StatelessWidget {
                               'Jesteś zalogowany jako:',
                               style: GoogleFonts.lato(
                                 color: ItemColor.itemBlack87,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ),
@@ -59,7 +59,7 @@ class AccountPageContent extends StatelessWidget {
                               '${state.user?.email}',
                               style: GoogleFonts.lato(
                                 color: ItemColor.itemBlack87,
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

@@ -106,8 +106,8 @@ class _UserPageState extends State<UserPage> {
                   backgroundColor: ItemColor.itemBlack54,
                   title: Text(
                     'Edytuj profil',
-                    style: GoogleFonts.lato(
-                      fontSize: 22,
+                    style: GoogleFonts.kanit(
+                      fontSize: 20,
                       color: ItemColor.itemWhite,
                     ),
                   ),

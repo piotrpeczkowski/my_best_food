@@ -80,7 +80,7 @@ class ItemWidget extends StatelessWidget {
                             style: GoogleFonts.lato(
                               color: ItemColor.itemBlack87,
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
                         ],

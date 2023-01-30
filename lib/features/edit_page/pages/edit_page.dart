@@ -67,8 +67,8 @@ class _EditPageState extends State<EditPage> {
                   backgroundColor: ItemColor.itemBlack54,
                   title: Text(
                     'Edytuj pozycję',
-                    style: GoogleFonts.lato(
-                      fontSize: 22,
+                    style: GoogleFonts.kanit(
+                      fontSize: 20,
                       color: ItemColor.itemWhite,
                     ),
                   ),

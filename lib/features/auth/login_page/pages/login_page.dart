@@ -52,13 +52,15 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           isCreatingAccount ? 'Zarejestruj się' : 'Zaloguj się',
                           style: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: ItemColor.itemWhite,
                           ),
                         ),
                       ),
+                      //----------------------------------------------
                       // EMAIL TextField
+                      //----------------------------------------------
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 10,
@@ -87,7 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                      //----------------------------------------------
                       // PASSWORD TextField
+                      //----------------------------------------------
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 10,
@@ -113,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                      //----------------------------------------------
                       // CONFIRM PASSWORD TextField
+                      //----------------------------------------------
                       Column(
                         children: [
                           if (isCreatingAccount == true) ...[
@@ -141,7 +147,9 @@ class _LoginPageState extends State<LoginPage> {
                           ]
                         ],
                       ),
+                      //----------------------------------------------
                       // REGISTER and LOGIN ElevatedButton
+                      //----------------------------------------------
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 20,
@@ -150,7 +158,9 @@ class _LoginPageState extends State<LoginPage> {
                           width: 200,
                           child: ElevatedButton(
                             onPressed: () {
+                              //----------------------------------------------
                               // LOGIN statement
+                              //----------------------------------------------
                               if (isCreatingAccount == false) {
                                 try {
                                   context.read<LoginCubit>().signIn(
@@ -168,7 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 }
                               }
+                              //----------------------------------------------
                               // REGISTER statement
+                              //----------------------------------------------
                               if (isCreatingAccount == true) {
                                 if (widget.passwordController.text ==
                                     widget.confirmPasswordController.text) {
@@ -201,14 +213,18 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               isCreatingAccount ? 'Zarejestruj' : 'Zaloguj',
                               style: GoogleFonts.lato(
-                                  fontSize: 14, color: ItemColor.itemWhite),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: ItemColor.itemWhite),
                             ),
                           ),
                         ),
                       ),
                       Column(
                         children: [
+                          //----------------------------------------------
                           // RESET PASSWORD button
+                          //----------------------------------------------
                           if (isCreatingAccount == false) ...[
                             TextButton(
                               onPressed: () {
@@ -230,11 +246,13 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 'Nie pamiętasz hasła?',
                                 style: GoogleFonts.lato(
-                                    fontSize: 14, color: ItemColor.itemWhite),
+                                    fontSize: 16, color: ItemColor.itemWhite),
                               ),
                             ),
                           ],
+                          //----------------------------------------------
                           // LOGIN - REGISTER switch
+                          //----------------------------------------------
                           TextButton(
                             onPressed: () {
                               if (isCreatingAccount == false) {
@@ -256,7 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ? 'Zaloguj się'
                                   : 'Zarejestruj się',
                               style: GoogleFonts.lato(
-                                  fontSize: 14, color: ItemColor.itemWhite),
+                                  fontSize: 16, color: ItemColor.itemWhite),
                             ),
                           ),
                         ],

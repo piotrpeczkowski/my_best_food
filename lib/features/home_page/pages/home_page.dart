@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       create: (context) => HomeCubit(ItemsRepository())..orderBy(0),
       child: Scaffold(
         appBar: MyAppBar(
+          currentIndex: _currentIndex,
           appBar: AppBar(),
           title: _currentIndex == 0 ? widget.title : widget.titleUser,
           actions: [

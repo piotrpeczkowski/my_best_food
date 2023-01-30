@@ -51,5 +51,5 @@ class RootPage extends StatelessWidget {
 
 class Strings {
   static String title = 'myBestFood';
-  static String titleUser = 'Profil użytkownika';
+  static String titleUser = 'Mój profil';
 }

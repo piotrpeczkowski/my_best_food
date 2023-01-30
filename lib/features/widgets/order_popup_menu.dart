@@ -32,8 +32,8 @@ class _OrderPopupMenuState extends State<OrderPopupMenu> {
             children: [
               Text(
                 'SORTUJ',
-                style: GoogleFonts.lato(
-                  fontSize: 14,
+                style: GoogleFonts.kanit(
+                  fontSize: 16,
                   color: ItemColor.itemWhite,
                 ),
               ),

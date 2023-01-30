@@ -51,8 +51,8 @@ class _AddPageState extends State<AddPage> {
                 backgroundColor: ItemColor.itemBlack54,
                 title: Text(
                   'Dodaj nową pozycję',
-                  style: GoogleFonts.lato(
-                    fontSize: 22,
+                  style: GoogleFonts.kanit(
+                    fontSize: 20,
                     color: ItemColor.itemWhite,
                   ),
                 ),

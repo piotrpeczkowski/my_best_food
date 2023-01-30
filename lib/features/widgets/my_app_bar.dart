@@ -5,11 +5,13 @@ import 'package:my_best_food/features/styles/styles.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     Key? key,
+    required this.currentIndex,
     required this.title,
     required this.appBar,
     required this.actions,
   }) : super(key: key);
 
+  final int currentIndex;
   final String title;
   final AppBar appBar;
   final List<Widget> actions;
@@ -22,10 +24,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Text(
         title,
-        style: GoogleFonts.lato(
-          fontSize: 22,
-          color: ItemColor.itemWhite,
-        ),
+        style: currentIndex == 0
+            ? GoogleFonts.kanit(
+                fontSize: 24,
+                color: ItemColor.itemOrange1,
+              )
+            : GoogleFonts.kanit(
+                fontSize: 22,
+                color: ItemColor.itemWhite,
+              ),
       ),
       actions: actions,
       backgroundColor: ItemColor.itemBlack54,

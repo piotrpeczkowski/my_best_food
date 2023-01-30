@@ -40,8 +40,8 @@ class SplashScreen extends StatelessWidget {
               alignment: FractionalOffset.center,
               child: Text(
                 'LDZ',
-                style: GoogleFonts.lato(
-                  fontSize: 132,
+                style: GoogleFonts.kanit(
+                  fontSize: 130,
                   fontWeight: FontWeight.bold,
                   color: Colors.white.withOpacity(0.1),
                 ),
@@ -53,8 +53,8 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'BestFOOD',
-                    style: GoogleFonts.lato(
+                    'myBestFood',
+                    style: GoogleFonts.kanit(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -81,10 +81,10 @@ class SplashScreen extends StatelessWidget {
                   const Padding(padding: EdgeInsets.only(bottom: 180)),
                   Text(
                     'Rank your best food',
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.kanit(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white.withOpacity(0.3),
                     ),
                   ),
                 ],
