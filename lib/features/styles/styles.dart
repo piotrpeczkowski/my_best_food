@@ -21,6 +21,8 @@ class ItemColor {
   static const Color itemWhite70 = Colors.white70;
   // Red
   static const Color itemRed = Colors.red;
+  // Green
+  static const Color itemGreen = Color.fromARGB(255, 0, 143, 5);
   // Orange
   static const Color itemOrange1 = Colors.orange;
   static const Color itemOrange2 = Color.fromARGB(255, 255, 170, 45);

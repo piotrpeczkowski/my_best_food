@@ -139,9 +139,11 @@ class _AddPageBody extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
+            //----------------------------------------------
             // RESTAURANT TextField
+            //----------------------------------------------
             Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(bottom: 10.0, top: 10),
               child: TextField(
                 onChanged: onRestaurantChanged,
                 decoration: InputDecoration(
@@ -157,7 +159,9 @@ class _AddPageBody extends StatelessWidget {
                 ),
               ),
             ),
+            //----------------------------------------------
             // FOOD TextField
+            //----------------------------------------------
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
@@ -175,7 +179,9 @@ class _AddPageBody extends StatelessWidget {
                 ),
               ),
             ),
+            //----------------------------------------------
             // PRICE TextField
+            //----------------------------------------------
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextField(
@@ -199,7 +205,9 @@ class _AddPageBody extends StatelessWidget {
                 ),
               ),
             ),
+            //----------------------------------------------
             // RANK Slider
+            //----------------------------------------------
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
               child: Slider(
@@ -214,30 +222,30 @@ class _AddPageBody extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'Ocena:',
-                  style: TextStyle(
+                  style: GoogleFonts.lato(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
-                      color: Colors.black),
+                      color: ItemColor.itemBlack87),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 5, left: 5),
                   child: Text(
                     rating.toString(),
-                    style: TextStyle(
+                    style: GoogleFonts.lato(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: rating >= 4.5
-                            ? const Color.fromARGB(255, 0, 143, 5)
+                            ? ItemColor.itemGreen
                             : rating <= 2.5
-                                ? Colors.red
-                                : Colors.black),
+                                ? ItemColor.itemRed
+                                : ItemColor.itemBlack87),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.star_border,
-                  color: Colors.black.withOpacity(0.7),
+                  color: ItemColor.itemBlack54,
                 ),
               ],
             ),
