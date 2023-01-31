@@ -35,6 +35,7 @@ class AccountPageContent extends StatelessWidget {
                           // TODO: implement user avatar display from DB
                           backgroundImage:
                               AssetImage('images/account_avatar.png'),
+                          //NetworkImage(url),
                         ),
                       ),
                       Column(

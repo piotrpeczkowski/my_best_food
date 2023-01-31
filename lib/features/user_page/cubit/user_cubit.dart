@@ -32,6 +32,18 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  Future<void> updateUserPhoto(
+    String id,
+    String imageUrl,
+  ) async {
+    try {
+      await _userRepository.updateUserPhoto(id, imageUrl);
+      emit(const UserState(saved: false));
+    } catch (error) {
+      emit(UserState(errorMessage: error.toString()));
+    }
+  }
+
   // Future pickImage(
   //   ImageSource source,
   //   File? imageFile,

@@ -7,8 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+// TODO: rebuild uploadFile function for better sync with firebase storage
+// TODO: build function for read image by userID from firebase storage
 
 class UserPage extends StatefulWidget {
   UserPage({
@@ -28,6 +30,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  /* 
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
@@ -47,9 +50,6 @@ class _UserPageState extends State<UserPage> {
     });
   }
 
-  // TODO: rebuild uploadFile function for better sync with firebase storage
-  // TODO: build function for read image by userID from firebase storage
-
   Future uploadFile() async {
     if (_photo == null) return;
     final fileName = basename(_photo!.path);
@@ -63,6 +63,38 @@ class _UserPageState extends State<UserPage> {
     } catch (e) {
       //print('error occured');
       throw Exception(e);
+    }
+  }
+  */
+
+  String _imageUrl = '';
+
+  Future<void> pickAndUploadImage() async {
+    // setup of image picker
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+
+    // when we have picture null, function return nothing
+    if (file == null) return;
+
+    // specify the unique name for the files to be stored
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // get reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('images');
+
+    // create reference for the picture to be stored
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+    // try-catch for handling errors
+    // way to store our pictures
+    try {
+      // way to store our picture
+      await referenceImageToUpload.putFile(File(file.path));
+      _imageUrl = await referenceImageToUpload.getDownloadURL();
+    } catch (error) {
+      // error
     }
   }
 
@@ -129,14 +161,10 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
                 body: _UserPageBody(
-                  image: _photo,
-                  onTap: () => imgFromCamera,
-                  // onTap: () {
-                  //   context.read<UserCubit>().pickImage(
-                  //         ImageSource.camera,
-                  //         _image,
-                  //       );
-                  // },
+                  imageUrl: _imageUrl,
+                  onTap: () {
+                    pickAndUploadImage();
+                  },
                   userEmail: userModel.email,
                   userNameLabel: 'Nazwa użytkownika',
                   userNameController: widget._userNameController,
@@ -175,8 +203,10 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               body: _UserPageBody(
-                image: _photo,
-                onTap: () => imgFromCamera,
+                imageUrl: _imageUrl,
+                onTap: () {
+                  pickAndUploadImage();
+                },
                 userEmail: widget.userEmail,
                 userNameLabel: 'Nazwa użytkownika',
                 userNameController: widget._userNameController,
@@ -203,11 +233,11 @@ class _UserPageBody extends StatelessWidget {
     required this.userCityLabel,
     required this.userGenderLabel,
     required this.userEmail,
-    required this.image,
+    required this.imageUrl,
     Key? key,
   }) : super(key: key);
 
-  final Function onTap;
+  final Function? onTap;
   final TextEditingController userNameController;
   final TextEditingController userCityController;
   final TextEditingController userGenderController;
@@ -215,7 +245,7 @@ class _UserPageBody extends StatelessWidget {
   final String userCityLabel;
   final String userGenderLabel;
   final String userEmail;
-  final File? image;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -233,8 +263,8 @@ class _UserPageBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
                   child: InkWell(
-                    onTap: onTap(),
-                    child: image == null
+                    onTap: onTap!(),
+                    child: imageUrl == ''
                         ? const Opacity(
                             opacity: 1,
                             child: CircleAvatar(
@@ -255,7 +285,7 @@ class _UserPageBody extends StatelessWidget {
                         : CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.transparent,
-                            backgroundImage: FileImage(image!),
+                            backgroundImage: NetworkImage(imageUrl),
                           ),
                   ),
                 ),
@@ -329,6 +359,7 @@ class _UserPageBody extends StatelessWidget {
                   ),
                 ),
               ),
+              Text(imageUrl),
             ],
           ),
         ],

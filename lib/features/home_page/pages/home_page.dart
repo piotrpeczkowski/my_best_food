@@ -27,8 +27,8 @@ class HomePage extends StatefulWidget {
   final String title; // main title of app
   final String titleUser; // title of user profile screen
 
-  // name of constant firebase collection for user informations
-  final userProfile = 'userProfile';
+  final userProfile =
+      'userProfile'; // name of constant firebase collection for user informations
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
           title: _currentIndex == 0 ? widget.title : widget.titleUser,
           actions: [
             Builder(builder: (context) {
+              //---------------------------------------------------
               // AppBar Icon for list screen
+              //---------------------------------------------------
               if (_currentIndex == 0) {
                 return const Center(
                     child: Padding(
@@ -57,7 +59,9 @@ class _HomePageState extends State<HomePage> {
                   child: OrderPopupMenu(),
                 ));
               }
+              //---------------------------------------------------
               // AppBar Icon for account  screen
+              //---------------------------------------------------
               if (_currentIndex == 1) {
                 return BlocProvider(
                   create: (context) => UserCubit(UserRepository()),
@@ -100,8 +104,11 @@ class _HomePageState extends State<HomePage> {
             });
           },
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Builder(builder: (context) {
+          //---------------------------------------------------
           // action of adding new position when restaurant list is display
+          //---------------------------------------------------
           if (_currentIndex == 0) {
             return FloatingActionButton(
               backgroundColor: ItemColor.itemOrange1,
@@ -118,7 +125,9 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
+          //---------------------------------------------------
           // action of sign out when account screen is display
+          //---------------------------------------------------
           return BlocProvider(
             create: (context) => LoginCubit(AuthRepository()),
             child: BlocBuilder<LoginCubit, LoginState>(
@@ -137,7 +146,9 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        //---------------------------------------------------
+        // HomePage content builder
+        //---------------------------------------------------
         body: Builder(builder: (context) {
           if (_currentIndex == 0) {
             return const RestaurantPageContent();
