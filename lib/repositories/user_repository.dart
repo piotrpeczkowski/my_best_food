@@ -24,6 +24,7 @@ class UserRepository {
       userName: doc['userName'],
       userCity: doc['userCity'],
       userGender: doc['userGender'],
+      imageUrl: doc['imageUrl'],
     );
   }
 

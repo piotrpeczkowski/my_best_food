@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
+import 'package:my_best_food/models/user_model.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -98,6 +99,22 @@ class _UserPageState extends State<UserPage> {
     }
   }
 
+  Future<void> cameraDialog() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => SimpleDialog(
+        title: const Text('Zrób zdjęcie'),
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Zrób zdjęcie')),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -161,8 +178,9 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
                 body: _UserPageBody(
+                  id: widget.id,
                   imageUrl: _imageUrl,
-                  onTap: () {
+                  onPressed: () {
                     pickAndUploadImage();
                   },
                   userEmail: userModel.email,
@@ -177,6 +195,9 @@ class _UserPageState extends State<UserPage> {
             }
             return Scaffold(
               appBar: AppBar(
+                iconTheme: const IconThemeData(
+                  color: ItemColor.itemWhite,
+                ),
                 backgroundColor: ItemColor.itemBlack54,
                 title: Text(
                   'Edytuj profil',
@@ -203,8 +224,9 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               body: _UserPageBody(
+                id: widget.id,
                 imageUrl: _imageUrl,
-                onTap: () {
+                onPressed: () {
                   pickAndUploadImage();
                 },
                 userEmail: widget.userEmail,
@@ -225,7 +247,7 @@ class _UserPageState extends State<UserPage> {
 
 class _UserPageBody extends StatelessWidget {
   const _UserPageBody({
-    required this.onTap,
+    required this.onPressed,
     required this.userNameController,
     required this.userCityController,
     required this.userGenderController,
@@ -234,10 +256,11 @@ class _UserPageBody extends StatelessWidget {
     required this.userGenderLabel,
     required this.userEmail,
     required this.imageUrl,
+    required this.id,
     Key? key,
   }) : super(key: key);
 
-  final Function? onTap;
+  final Function? onPressed;
   final TextEditingController userNameController;
   final TextEditingController userCityController;
   final TextEditingController userGenderController;
@@ -246,6 +269,7 @@ class _UserPageBody extends StatelessWidget {
   final String userGenderLabel;
   final String userEmail;
   final String imageUrl;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -254,51 +278,83 @@ class _UserPageBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.all(15),
-            width: double.infinity,
-            color: Colors.black12,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 15),
-                  child: InkWell(
-                    onTap: onTap!(),
-                    child: imageUrl == ''
-                        ? const Opacity(
-                            opacity: 1,
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: ItemColor.itemBlack87,
+          BlocBuilder<UserCubit, UserState>(
+            builder: (context, state) {
+              return Container(
+                padding: const EdgeInsets.all(15),
+                width: double.infinity,
+                color: Colors.black12,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 25),
+                      child: state.userModel?.imageUrl == ''
+                          ? Opacity(
+                              opacity: 1,
                               child: CircleAvatar(
-                                radius: 49,
-                                backgroundColor:
-                                    Color.fromARGB(255, 200, 200, 200),
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  color: ItemColor.itemBlack54,
-                                  size: 50,
+                                radius: 50,
+                                backgroundColor: ItemColor.itemBlack87,
+                                child: CircleAvatar(
+                                  radius: 49,
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 200, 200, 200),
+                                  child: IconButton(
+                                    icon:
+                                        const Icon(Icons.add_a_photo, size: 50),
+                                    color: ItemColor.itemBlack54,
+                                    onPressed: () {
+                                      _imageSourceDialog(
+                                        context,
+                                        id,
+                                        imageUrl,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
+                            )
+                          : BlocBuilder<UserCubit, UserState>(
+                              builder: (context, state) {
+                                final image = state.userModel?.imageUrl;
+                                if (image == null) {
+                                  return Opacity(
+                                    opacity: 1,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add_a_photo,
+                                          size: 70),
+                                      color: ItemColor.itemBlack54,
+                                      onPressed: () {
+                                        _imageSourceDialog(
+                                          context,
+                                          id,
+                                          imageUrl,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }
+                                return CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(state.userModel!.imageUrl),
+                                );
+                              },
                             ),
-                          )
-                        : CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(imageUrl),
-                          ),
-                  ),
+                    ),
+                    Text(
+                      userEmail,
+                      style: GoogleFonts.lato(
+                        color: ItemColor.itemBlack87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  userEmail,
-                  style: GoogleFonts.lato(
-                    color: ItemColor.itemBlack87,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,8 +415,59 @@ class _UserPageBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(imageUrl),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<dynamic> _imageSourceDialog(
+      BuildContext context, String id, String image) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => SimpleDialog(
+        title: Text(
+          'Zrób zdjęcie',
+          style: GoogleFonts.kanit(),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 25.0,
+              vertical: 5,
+            ),
+            child: ElevatedButton(
+                onPressed: () {
+                  onPressed!();
+                  // Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Otwórz aparat',
+                  style: GoogleFonts.kanit(
+                    fontSize: 16,
+                  ),
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 25.0,
+              vertical: 5,
+            ),
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.read<UserCubit>().updateUserPhoto(
+                        id,
+                        image,
+                      );
+                },
+                child: Text(
+                  'Zapisz i wyjdź',
+                  style: GoogleFonts.kanit(
+                    fontSize: 16,
+                  ),
+                )),
           ),
         ],
       ),

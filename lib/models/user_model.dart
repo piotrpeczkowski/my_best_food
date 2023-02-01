@@ -5,6 +5,7 @@ class UserModel {
     required this.userName,
     required this.userCity,
     required this.userGender,
+    required this.imageUrl,
   });
 
   final String id;
@@ -12,4 +13,5 @@ class UserModel {
   final String userName;
   final String userCity;
   final String userGender;
+  final String imageUrl;
 }
