@@ -227,7 +227,7 @@ class _UserPageBody extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.all(15),
                 width: double.infinity,
-                color: Colors.black12,
+                color: ItemColor.itemBlack12,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

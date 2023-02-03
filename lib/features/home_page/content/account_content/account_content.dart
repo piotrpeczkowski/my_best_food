@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
+import 'package:my_best_food/repositories/user_repository.dart';
 import 'package:my_best_food/root/cubit/root_cubit.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 
@@ -26,16 +28,26 @@ class AccountPageContent extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     children: [
-                      const Opacity(
-                        opacity: 0.3,
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.white,
-                          // default image for user avatar
-                          // TODO: implement user avatar display from DB
-                          backgroundImage:
-                              AssetImage('images/account_avatar.png'),
-                          //NetworkImage(url),
+                      BlocProvider(
+                        create: (context) =>
+                            UserCubit(UserRepository())..getUserInfoWithID(id),
+                        child: BlocBuilder<UserCubit, UserState>(
+                          builder: (context, state) {
+                            final userImage = state.userModel?.imageUrl;
+                            if (userImage == null || userImage == '') {
+                              return const CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.white,
+                                backgroundImage:
+                                    AssetImage('images/account_avatar.png'),
+                              );
+                            }
+                            return CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.white,
+                              backgroundImage: NetworkImage(userImage),
+                            );
+                          },
                         ),
                       ),
                       Column(
