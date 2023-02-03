@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
 import 'package:my_best_food/features/widgets/camera_simple_dialog.dart';
@@ -100,9 +101,16 @@ class _UserPageState extends State<UserPage> {
                     context.read<UserCubit>().pickAndUploadImage(
                           widget.id,
                           imageUrl,
+                          ImageSource.camera,
                         );
                   },
-                  openGallery: () {},
+                  openGallery: () {
+                    context.read<UserCubit>().pickAndUploadImage(
+                          widget.id,
+                          imageUrl,
+                          ImageSource.gallery,
+                        );
+                  },
                   userEmail: userModel.email,
                   userNameLabel: 'Nazwa użytkownika',
                   userNameController: widget._userNameController,
@@ -153,9 +161,16 @@ class _UserPageState extends State<UserPage> {
                   context.read<UserCubit>().pickAndUploadImage(
                         widget.id,
                         imageUrl,
+                        ImageSource.camera,
                       );
                 },
-                openGallery: () {},
+                openGallery: () {
+                  context.read<UserCubit>().pickAndUploadImage(
+                        widget.id,
+                        imageUrl,
+                        ImageSource.gallery,
+                      );
+                },
                 userEmail: widget.userEmail,
                 userNameLabel: 'Nazwa użytkownika',
                 userNameController: widget._userNameController,

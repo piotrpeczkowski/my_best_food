@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:my_best_food/models/user_model.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
-//import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'user_state.dart';
 
@@ -47,9 +47,10 @@ class UserCubit extends Cubit<UserState> {
   Future<void> pickAndUploadImage(
     String id,
     String imageUrl,
+    ImageSource source,
   ) async {
     try {
-      await _userRepository.pickAndUploadImage(id, imageUrl);
+      await _userRepository.pickAndUploadImage(id, imageUrl, source);
       emit(const UserState(saved: false));
     } catch (error) {
       emit(UserState(errorMessage: error.toString()));

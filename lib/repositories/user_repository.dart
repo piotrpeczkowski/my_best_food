@@ -78,13 +78,14 @@ class UserRepository {
   Future<void> pickAndUploadImage(
     String id,
     String imageUrl,
+    ImageSource source,
   ) async {
     final dateTimeFileName = DateTime.now().millisecondsSinceEpoch.toString();
     final firebaseStorageReference = FirebaseStorage.instance.ref();
     final userID = FirebaseAuth.instance.currentUser?.uid;
 
     ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+    XFile? file = await imagePicker.pickImage(source: source);
 
     if (file == null) return;
 
