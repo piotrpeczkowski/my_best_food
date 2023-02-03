@@ -54,27 +54,6 @@ class UserRepository {
     );
   }
 
-  Future<void> updateUserPhoto(
-    String id,
-    String imageUrl,
-  ) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('userProfile')
-        .doc(id)
-        .set(
-      {
-        'imageUrl': imageUrl,
-      },
-      SetOptions(merge: true),
-    );
-  }
-
   Future<void> pickAndUploadImage(
     String id,
     String imageUrl,

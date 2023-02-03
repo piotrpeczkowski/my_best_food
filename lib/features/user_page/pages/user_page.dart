@@ -232,7 +232,7 @@ class _UserPageBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 35),
+                      padding: const EdgeInsets.only(top: 15, bottom: 25),
                       child: state.userModel?.imageUrl == null ||
                               state.userModel?.imageUrl == ''
                           //------------------------------------------------------

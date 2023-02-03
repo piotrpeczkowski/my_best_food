@@ -31,6 +31,7 @@ Future<void> imageSourceDialog(
                 child: ElevatedButton(
                     onPressed: () {
                       openCamera();
+                      Navigator.of(context).pop();
                     },
                     child: Text(
                       'Otwórz aparat',
@@ -47,6 +48,7 @@ Future<void> imageSourceDialog(
                 child: ElevatedButton(
                     onPressed: () {
                       openGallery();
+                      Navigator.of(context).pop();
                     },
                     child: Text(
                       'Otwórz Galerię',
