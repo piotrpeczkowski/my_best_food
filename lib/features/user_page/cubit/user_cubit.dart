@@ -44,10 +44,16 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  // Future pickImage(
-  //   ImageSource source,
-  //   File? imageFile,
-  // ) async {
-  //   await _userRepository.pickImage(source, imageFile);
-  // }
+  Future<void> pickAndUploadImage(
+    String id,
+    String imageUrl,
+  ) async {
+    try {
+      await _userRepository.pickAndUploadImage(id, imageUrl);
+      emit(const UserState(saved: false));
+    } catch (error) {
+      emit(UserState(errorMessage: error.toString()));
+      //print(error);
+    }
+  }
 }

@@ -1,17 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/features/styles/styles.dart';
 import 'package:my_best_food/features/user_page/cubit/user_cubit.dart';
-import 'package:my_best_food/models/user_model.dart';
+import 'package:my_best_food/features/widgets/camera_simple_dialog.dart';
 import 'package:my_best_food/repositories/user_repository.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-// TODO: rebuild uploadFile function for better sync with firebase storage
-// TODO: build function for read image by userID from firebase storage
 
 class UserPage extends StatefulWidget {
   UserPage({
@@ -22,6 +15,8 @@ class UserPage extends StatefulWidget {
 
   final String id;
   final String userEmail;
+
+  // Controllers for user data fields
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userCityController = TextEditingController();
   final TextEditingController _userGenderController = TextEditingController();
@@ -31,89 +26,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  /* 
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
-
-  File? _photo;
-  final ImagePicker _picker = ImagePicker();
-
-  Future imgFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        //print('No image selected.');
-      }
-    });
-  }
-
-  Future uploadFile() async {
-    if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
-
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!);
-    } catch (e) {
-      //print('error occured');
-      throw Exception(e);
-    }
-  }
-  */
-
-  String _imageUrl = '';
-
-  Future<void> pickAndUploadImage() async {
-    // setup of image picker
-    ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
-
-    // when we have picture null, function return nothing
-    if (file == null) return;
-
-    // specify the unique name for the files to be stored
-    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-    // get reference to storage root
-    Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('images');
-
-    // create reference for the picture to be stored
-    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
-
-    // try-catch for handling errors
-    // way to store our pictures
-    try {
-      // way to store our picture
-      await referenceImageToUpload.putFile(File(file.path));
-      _imageUrl = await referenceImageToUpload.getDownloadURL();
-    } catch (error) {
-      // error
-    }
-  }
-
-  Future<void> cameraDialog() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => SimpleDialog(
-        title: const Text('Zrób zdjęcie'),
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Zrób zdjęcie')),
-        ],
-      ),
-    );
-  }
+  String imageUrl = '';
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +60,9 @@ class _UserPageState extends State<UserPage> {
               widget._userNameController.text = userModel.userName;
               widget._userCityController.text = userModel.userCity;
               widget._userGenderController.text = userModel.userGender;
+              //------------------------------------------------------
+              // Screen with data when userModel isn't null in firebase
+              //------------------------------------------------------
               return Scaffold(
                 appBar: AppBar(
                   iconTheme: const IconThemeData(
@@ -179,10 +95,14 @@ class _UserPageState extends State<UserPage> {
                 ),
                 body: _UserPageBody(
                   id: widget.id,
-                  imageUrl: _imageUrl,
-                  onPressed: () {
-                    pickAndUploadImage();
+                  imageUrl: imageUrl,
+                  openCamera: () {
+                    context.read<UserCubit>().pickAndUploadImage(
+                          widget.id,
+                          imageUrl,
+                        );
                   },
+                  openGallery: () {},
                   userEmail: userModel.email,
                   userNameLabel: 'Nazwa użytkownika',
                   userNameController: widget._userNameController,
@@ -193,6 +113,9 @@ class _UserPageState extends State<UserPage> {
                 ),
               );
             }
+            //------------------------------------------------------
+            // Screen without user data when userModel is null in firebase
+            //------------------------------------------------------
             return Scaffold(
               appBar: AppBar(
                 iconTheme: const IconThemeData(
@@ -225,10 +148,14 @@ class _UserPageState extends State<UserPage> {
               ),
               body: _UserPageBody(
                 id: widget.id,
-                imageUrl: _imageUrl,
-                onPressed: () {
-                  pickAndUploadImage();
+                imageUrl: imageUrl,
+                openCamera: () {
+                  context.read<UserCubit>().pickAndUploadImage(
+                        widget.id,
+                        imageUrl,
+                      );
                 },
+                openGallery: () {},
                 userEmail: widget.userEmail,
                 userNameLabel: 'Nazwa użytkownika',
                 userNameController: widget._userNameController,
@@ -247,7 +174,8 @@ class _UserPageState extends State<UserPage> {
 
 class _UserPageBody extends StatelessWidget {
   const _UserPageBody({
-    required this.onPressed,
+    required this.openCamera,
+    required this.openGallery,
     required this.userNameController,
     required this.userCityController,
     required this.userGenderController,
@@ -260,7 +188,8 @@ class _UserPageBody extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final Function? onPressed;
+  final Function openCamera;
+  final Function openGallery;
   final TextEditingController userNameController;
   final TextEditingController userCityController;
   final TextEditingController userGenderController;
@@ -288,61 +217,57 @@ class _UserPageBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 25),
-                      child: state.userModel?.imageUrl == ''
+                      padding: const EdgeInsets.only(top: 15, bottom: 35),
+                      child: state.userModel?.imageUrl == null ||
+                              state.userModel?.imageUrl == ''
+                          //------------------------------------------------------
+                          // Pick image icon when imageUrl was not uploaded to firestore
+                          //------------------------------------------------------
                           ? Opacity(
                               opacity: 1,
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundColor: ItemColor.itemBlack87,
-                                child: CircleAvatar(
-                                  radius: 49,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 200, 200, 200),
-                                  child: IconButton(
-                                    icon:
-                                        const Icon(Icons.add_a_photo, size: 50),
-                                    color: ItemColor.itemBlack54,
-                                    onPressed: () {
-                                      _imageSourceDialog(
-                                        context,
-                                        id,
-                                        imageUrl,
-                                      );
-                                    },
-                                  ),
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.add_a_photo,
+                                  size: 50,
                                 ),
+                                color: ItemColor.itemBlack54,
+                                onPressed: () {
+                                  // Method to display pick image dialog
+                                  imageSourceDialog(
+                                    context,
+                                    id,
+                                    imageUrl,
+                                    openCamera,
+                                    openGallery,
+                                  );
+                                },
                               ),
                             )
-                          : BlocBuilder<UserCubit, UserState>(
-                              builder: (context, state) {
-                                final image = state.userModel?.imageUrl;
-                                if (image == null) {
-                                  return Opacity(
-                                    opacity: 1,
-                                    child: IconButton(
-                                      icon: const Icon(Icons.add_a_photo,
-                                          size: 70),
-                                      color: ItemColor.itemBlack54,
-                                      onPressed: () {
-                                        _imageSourceDialog(
-                                          context,
-                                          id,
-                                          imageUrl,
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                                return CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage:
-                                      NetworkImage(state.userModel!.imageUrl),
+                          //------------------------------------------------------
+                          // User Avatar when imageUrl was uploaded to firestore
+                          //------------------------------------------------------
+                          : InkWell(
+                              onTap: () {
+                                // Method to display pick image dialog
+                                imageSourceDialog(
+                                  context,
+                                  id,
+                                  imageUrl,
+                                  openCamera,
+                                  openGallery,
                                 );
                               },
+                              child: CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    NetworkImage(state.userModel!.imageUrl),
+                              ),
                             ),
                     ),
+                    //------------------------------------------------------
+                    // Email (as a string) of current user
+                    //------------------------------------------------------
                     Text(
                       userEmail,
                       style: GoogleFonts.lato(
@@ -359,7 +284,9 @@ class _UserPageBody extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //------------------------------------------------------
               // NAME TextField
+              //------------------------------------------------------
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
                 child: TextField(
@@ -377,7 +304,9 @@ class _UserPageBody extends StatelessWidget {
                   ),
                 ),
               ),
+              //------------------------------------------------------
               // CITY TextField
+              //------------------------------------------------------
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -396,7 +325,9 @@ class _UserPageBody extends StatelessWidget {
                   ),
                 ),
               ),
+              //------------------------------------------------------
               // GENDER TextField
+              //------------------------------------------------------
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -416,58 +347,6 @@ class _UserPageBody extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<dynamic> _imageSourceDialog(
-      BuildContext context, String id, String image) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => SimpleDialog(
-        title: Text(
-          'Zrób zdjęcie',
-          style: GoogleFonts.kanit(),
-        ),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-              vertical: 5,
-            ),
-            child: ElevatedButton(
-                onPressed: () {
-                  onPressed!();
-                  // Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Otwórz aparat',
-                  style: GoogleFonts.kanit(
-                    fontSize: 16,
-                  ),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-              vertical: 5,
-            ),
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.read<UserCubit>().updateUserPhoto(
-                        id,
-                        image,
-                      );
-                },
-                child: Text(
-                  'Zapisz i wyjdź',
-                  style: GoogleFonts.kanit(
-                    fontSize: 16,
-                  ),
-                )),
           ),
         ],
       ),
