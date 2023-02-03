@@ -35,11 +35,14 @@ class AccountPageContent extends StatelessWidget {
                           builder: (context, state) {
                             final userImage = state.userModel?.imageUrl;
                             if (userImage == null || userImage == '') {
-                              return const CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.white,
-                                backgroundImage:
-                                    AssetImage('images/account_avatar.png'),
+                              return const Opacity(
+                                opacity: 0.3,
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage:
+                                      AssetImage('images/account_avatar.png'),
+                                ),
                               );
                             }
                             return CircleAvatar(
