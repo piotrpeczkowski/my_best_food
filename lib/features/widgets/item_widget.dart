@@ -17,7 +17,15 @@ class ItemWidget extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, top: 10, right: 15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: ItemColor.itemBlack.withOpacity(0.05),
+        color: ItemColor.itemWhite.withOpacity(0.9),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.orange.withOpacity(0.95),
+            spreadRadius: 1,
+            blurRadius: 0,
+            offset: const Offset(0, 1),
+          ),
+        ],
         borderRadius: BorderRadius.circular(2.5),
       ),
       child: Column(
@@ -40,7 +48,7 @@ class ItemWidget extends StatelessWidget {
           ),
           const Divider(thickness: 1),
           Padding(
-            padding: const EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -50,7 +58,7 @@ class ItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
                           itemModel.restaurant,
                           style: GoogleFonts.lato(
