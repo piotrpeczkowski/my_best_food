@@ -74,10 +74,7 @@ class _EditPageState extends State<EditPage> {
                   ),
                   actions: [
                     IconButton(
-                      onPressed: widget._restaurantController.text == '' ||
-                              widget._foodController.text == '' ||
-                              widget._priceController.text == '' ||
-                              _rating == null
+                      onPressed: _rating == null
                           ? null
                           : () {
                               context.read<EditCubit>().update(
