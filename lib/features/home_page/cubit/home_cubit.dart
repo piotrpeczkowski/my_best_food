@@ -20,9 +20,9 @@ class HomeCubit extends Cubit<HomeState> {
     } else if (selectedItem == 1) {
       start(false, 'dateTime');
     } else if (selectedItem == 2) {
-      start(true, 'restaurant');
-    } else if (selectedItem == 3) {
       start(false, 'restaurant');
+    } else if (selectedItem == 3) {
+      start(true, 'restaurant');
     } else if (selectedItem == 4) {
       start(true, 'rank');
     } else if (selectedItem == 5) {
