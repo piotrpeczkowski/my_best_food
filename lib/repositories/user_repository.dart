@@ -7,6 +7,31 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_best_food/models/user_model.dart';
 
 class UserRepository {
+  Stream<List<UserModel>> getInfosStream() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    final userEmail = FirebaseAuth.instance.currentUser?.email;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('userProfile')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return UserModel(
+          id: doc.id,
+          email: userEmail!,
+          userName: doc['userName'],
+          userCity: doc['userCity'],
+          userGender: doc['userGender'],
+          imageUrl: doc['imageUrl'],
+        );
+      }).toList();
+    });
+  }
+
   Future<UserModel> get({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     final userEmail = FirebaseAuth.instance.currentUser?.email;

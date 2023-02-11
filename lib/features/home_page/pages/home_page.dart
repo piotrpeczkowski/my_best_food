@@ -153,7 +153,10 @@ class _HomePageState extends State<HomePage> {
           if (_currentIndex == 0) {
             return const RestaurantPageContent();
           }
-          return AccountPageContent(id: widget.userProfile);
+          return AccountPageContent(
+            id: widget.userProfile,
+            userEmail: widget.userEmail,
+          );
         }),
       ),
     );
