@@ -38,7 +38,7 @@ class AccountPageContent extends StatelessWidget {
                       }
                       return Column(
                         children: [
-                          for (final userModel in userModels)
+                          for (final userModel in userModels) ...[
                             userModel.imageUrl.isEmpty
                                 ? const Opacity(
                                     opacity: 0.3,
@@ -55,29 +55,63 @@ class AccountPageContent extends StatelessWidget {
                                     backgroundImage:
                                         NetworkImage(userModel.imageUrl),
                                   ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 10.0, top: 20),
-                            child: Text(
-                              'Jesteś zalogowany jako: ',
-                              style: GoogleFonts.lato(
-                                color: ItemColor.itemBlack87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 10.0, top: 20),
+                              child: Text(
+                                'Jesteś zalogowany jako: ',
+                                style: GoogleFonts.lato(
+                                  color: ItemColor.itemBlack87,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              userEmail,
-                              style: GoogleFonts.lato(
-                                color: ItemColor.itemBlack87,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                userEmail,
+                                style: GoogleFonts.lato(
+                                  color: ItemColor.itemBlack87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                'Nazwa: ${userModel.userName}',
+                                style: GoogleFonts.lato(
+                                  color: ItemColor.itemBlack87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                'Nazwa: ${userModel.userCity}',
+                                style: GoogleFonts.lato(
+                                  color: ItemColor.itemBlack87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                'Nazwa: ${userModel.userGender}',
+                                style: GoogleFonts.lato(
+                                  color: ItemColor.itemBlack87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ]
                         ],
                       );
                     },
