@@ -49,6 +49,7 @@ dependencies:
   path_provider: ^2.0.12
   firebase_storage: ^11.0.10
   path: ^1.8.2
+  flutterfire_cli: ^0.2.6+1
 
 dev_dependencies:
   flutter_test:
