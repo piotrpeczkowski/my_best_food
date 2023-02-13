@@ -9,6 +9,42 @@
       "client_info": {
         "mobilesdk_app_id": "1:1063703718985:android:21d7f1c1cece2a552f2398",
         "android_client_info": {
+          "package_name": "com.example.my_best_food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063703718985-ci5fed4bcjcdnd5gl3t4stvq3em0j00k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMay-52EF_9c11wzfYB5p6DhZ5Db5MEhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063703718985-ci5fed4bcjcdnd5gl3t4stvq3em0j00k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1063703718985-qodt34a7j2ghoi98muvaguuvi9g3vvi0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myBestFood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063703718985:android:81289965f6269b442f2398",
+        "android_client_info": {
           "package_name": "com.piotrpeczkowski.my_best_food"
         }
       },
@@ -29,6 +65,13 @@
             {
               "client_id": "1063703718985-ci5fed4bcjcdnd5gl3t4stvq3em0j00k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1063703718985-qodt34a7j2ghoi98muvaguuvi9g3vvi0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myBestFood"
+              }
             }
           ]
         }
