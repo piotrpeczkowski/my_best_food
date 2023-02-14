@@ -84,7 +84,6 @@ class UserRepository {
     String imageUrl,
     ImageSource source,
   ) async {
-    final dateTimeFileName = DateTime.now().millisecondsSinceEpoch.toString();
     final firebaseStorageReference = FirebaseStorage.instance.ref();
     final userID = FirebaseAuth.instance.currentUser?.uid;
 
@@ -93,10 +92,11 @@ class UserRepository {
 
     if (file == null) return;
 
-    String uniqueFileName = dateTimeFileName;
     Reference referenceRoot = firebaseStorageReference;
-    Reference referenceDirImages = referenceRoot.child('images');
-    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+    Reference referenceDirImages =
+        referenceRoot.child(userID ?? 'unregistered');
+    Reference referenceImageToUpload =
+        referenceDirImages.child('avatar_$userID');
 
     try {
       await referenceImageToUpload.putFile(File(file.path));
