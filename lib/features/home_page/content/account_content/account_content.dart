@@ -24,10 +24,10 @@ class AccountPageContent extends StatelessWidget {
         builder: (context, state) {
           return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 0),
                   child: BlocBuilder<AccountCubit, AccountState>(
                     builder: (context, state) {
                       final userModels = state.infos;
@@ -39,76 +39,84 @@ class AccountPageContent extends StatelessWidget {
                       return Column(
                         children: [
                           for (final userModel in userModels) ...[
-                            userModel.imageUrl.isEmpty
-                                ? const Opacity(
-                                    opacity: 0.3,
-                                    child: CircleAvatar(
-                                      radius: 50,
-                                      backgroundColor: Colors.white,
-                                      backgroundImage: AssetImage(
-                                          'images/account_avatar.png'),
+                            Container(
+                              color: ItemColor.itemBlack12,
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(
+                                top: 30,
+                                bottom: 15,
+                              ),
+                              child: Column(
+                                children: [
+                                  userModel.imageUrl.isEmpty
+                                      ? const Opacity(
+                                          opacity: 0.3,
+                                          child: CircleAvatar(
+                                            radius: 50,
+                                            backgroundColor: Colors.white,
+                                            backgroundImage: AssetImage(
+                                                'images/account_avatar.png'),
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 50,
+                                          backgroundColor: Colors.white,
+                                          backgroundImage:
+                                              NetworkImage(userModel.imageUrl),
+                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Text(
+                                      userEmail,
+                                      style: GoogleFonts.lato(
+                                        color: ItemColor.itemBlack87,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  )
-                                : CircleAvatar(
-                                    radius: 50,
-                                    backgroundColor: Colors.white,
-                                    backgroundImage:
-                                        NetworkImage(userModel.imageUrl),
                                   ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 10.0, top: 20),
-                              child: Text(
-                                'Jesteś zalogowany jako: ',
-                                style: GoogleFonts.lato(
-                                  color: ItemColor.itemBlack87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                ],
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                userEmail,
-                                style: GoogleFonts.lato(
-                                  color: ItemColor.itemBlack87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Nazwa: ${userModel.userName}',
-                                style: GoogleFonts.lato(
-                                  color: ItemColor.itemBlack87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Nazwa: ${userModel.userCity}',
-                                style: GoogleFonts.lato(
-                                  color: ItemColor.itemBlack87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Nazwa: ${userModel.userGender}',
-                                style: GoogleFonts.lato(
-                                  color: ItemColor.itemBlack87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Nazwa:  ${userModel.userName}',
+                                      style: GoogleFonts.lato(
+                                        color: ItemColor.itemBlack87,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Miasto:  ${userModel.userCity}',
+                                      style: GoogleFonts.lato(
+                                        color: ItemColor.itemBlack87,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Płeć:  ${userModel.userGender}',
+                                      style: GoogleFonts.lato(
+                                        color: ItemColor.itemBlack87,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ]
