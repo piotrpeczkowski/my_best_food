@@ -40,10 +40,10 @@ class AccountPageContent extends StatelessWidget {
                         children: [
                           for (final userModel in userModels) ...[
                             Container(
-                              color: ItemColor.itemBlack12,
+                              color: ItemColor.itemOrange1,
                               width: double.infinity,
                               padding: const EdgeInsets.only(
-                                top: 30,
+                                top: 40,
                                 bottom: 15,
                               ),
                               child: Column(

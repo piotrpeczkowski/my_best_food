@@ -227,12 +227,12 @@ class _UserPageBody extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.all(15),
                 width: double.infinity,
-                color: ItemColor.itemBlack12,
+                color: ItemColor.itemOrange1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 25),
+                      padding: const EdgeInsets.only(top: 25, bottom: 25),
                       child: state.userModel?.imageUrl == null ||
                               state.userModel?.imageUrl == ''
                           //------------------------------------------------------
