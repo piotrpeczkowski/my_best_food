@@ -132,8 +132,8 @@ class _UserPageState extends State<UserPage> {
                 backgroundColor: ItemColor.itemBlack54,
                 title: Text(
                   'Edytuj profil',
-                  style: GoogleFonts.lato(
-                    fontSize: 22,
+                  style: GoogleFonts.kanit(
+                    fontSize: 20,
                     color: ItemColor.itemWhite,
                   ),
                 ),
@@ -261,23 +261,35 @@ class _UserPageBody extends StatelessWidget {
                           //------------------------------------------------------
                           // User Avatar when imageUrl was uploaded to firestore
                           //------------------------------------------------------
-                          : InkWell(
-                              onTap: () {
-                                // Method to display pick image dialog
-                                imageSourceDialog(
-                                  context,
-                                  id,
-                                  imageUrl,
-                                  openCamera,
-                                  openGallery,
-                                );
-                              },
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.transparent,
-                                backgroundImage:
-                                    NetworkImage(state.userModel!.imageUrl),
-                              ),
+                          : Stack(
+                              alignment: AlignmentDirectional.bottomEnd,
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(state.userModel!.imageUrl),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    imageSourceDialog(
+                                      context,
+                                      id,
+                                      imageUrl,
+                                      openCamera,
+                                      openGallery,
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        ItemColor.itemWhite.withOpacity(0.85),
+                                    child: const Icon(
+                                      Icons.add_a_photo,
+                                      color: ItemColor.itemBlack,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                     ),
                     //------------------------------------------------------
